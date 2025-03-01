@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react"
 
-function StatsChart() {
+function  StatsChart() {
   const canvasRef = useRef(null)
 
   useEffect(() => {
