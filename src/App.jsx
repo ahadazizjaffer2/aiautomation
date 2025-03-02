@@ -3,7 +3,7 @@ import viteLogo from '/vite.svg';
 import './App.css';
 import DashboardPage from './routes/Dashaboard';
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
-import Layout from './layout/Layout';
+import Layout from './Layout/Layout';
 import Calendar from './routes/calender';
 import Analytics from './routes/Analytics';
 import Login from './routes/Login';
