@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Bell, ChevronDown, User, HelpCircle, Settings, LogOut, Plus, X, Briefcase } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 const Navbar = () => {
@@ -101,6 +101,19 @@ const Navbar = () => {
             {/* Left side - Logo */}
             <div className="flex items-center">
               <span className="text-xl font-bold">Dashboard</span>
+            </div>
+            <div>
+              <ul className='flex gap-5'>
+                <Link to='/'>
+                  <li>Home</li>
+                </Link>
+                <Link to='/crm'>
+                  <li>AI CRM</li>
+                </Link>
+                <Link>
+                  <li>Compaigns</li>
+                </Link>
+              </ul>
             </div>
 
             {/* Right Side - Dropdowns */}
