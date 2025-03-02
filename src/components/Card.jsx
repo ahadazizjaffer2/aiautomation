@@ -4,7 +4,7 @@ import React from 'react'
 function Card() {
   return (
     <div className="w-full max-w-sm bg-gradient-to-br from-white to-teal-50/50 rounded-2xl p-4 border border-teal-100/50 shadow-sm">
-    <div className="flex items-start justify-between mb-6">
+    <div className="flex items-start justify-betAween mb-6">
       <div className="flex items-center gap-4">
         <div className="p-3 bg-teal-50 rounded-full">
           <Mail className="h-6 w-6 text-teal-600" />

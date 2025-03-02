@@ -110,9 +110,10 @@ const Navbar = () => {
                 <Link to='/crm'>
                   <li>AI CRM</li>
                 </Link>
-                <Link>
-                  <li>Compaigns</li>
-                </Link>
+                <Link to="/campaigns">
+  <li>Campaigns</li>
+</Link>
+
               </ul>
             </div>
 
