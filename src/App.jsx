@@ -14,7 +14,7 @@ import WebsiteVisitor from './routes/WebsiteVisitor';
 import MultiBox from './routes/Multibox';
 import EmailAccounts from './routes/EmailAccounts';
 import AILeadScouts from './routes/AILeadScouts';
-import Crm from './routes/CRM';
+import Crm from './routes/Crm';
 import Campaigns from './routes/Campaigns';
 import AiLeadScouts from './routes/AILeadScouts';
 
