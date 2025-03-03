@@ -16,7 +16,10 @@ import EmailAccounts from './routes/EmailAccounts';
 import AILeadScouts from './routes/AILeadScouts';
 import Crm from './routes/Crm';
 import Campaigns from './routes/Campaigns';
+import Settings from './routes/Settings';
+import Support from './routes/Support';
 import AiLeadScouts from './routes/AILeadScouts';
+import CompaignTarget from './routes/CompaignTarget';
 
 function App() {
   const router = createBrowserRouter(
@@ -28,6 +31,7 @@ function App() {
           <Route index element={<DashboardPage />} />
           <Route path='/crm' element={ <Crm /> } />
           <Route path='/campaigns' element={ <Campaigns /> } />
+          <Route path='/campaigns/target' element={ <CompaignTarget /> } />
           <Route path="/calender" element={<Calendar />} />
           <Route path="/analytics" element={<Analytics />} />
           {/* new work here */}
@@ -36,6 +40,8 @@ function App() {
           <Route path="/multi-box" element={<MultiBox />} />           
           <Route path="/email-accounts" element={<EmailAccounts />} /> 
           <Route path="/ai-lead-scouts" element={<AILeadScouts />} />  
+          <Route path="/settings" element={<Settings />} />           
+          <Route path="/support" element={<Support />} />  
         </Route>
       </>
     )

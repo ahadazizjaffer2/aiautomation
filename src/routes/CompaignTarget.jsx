@@ -16,8 +16,13 @@ import {
   Clock,
   Sparkles,
   Phone,
+  Zap,
+  Eye,
+  Hand,
+  CircleDollarSign,
 } from "lucide-react"
 
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from "recharts";
 const calls = [
   {
     id: 1,
@@ -200,7 +205,7 @@ const opportunities = [
   },
 ]
 
-export default function Crm() {
+export default function CompaignTarget() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const listItems = [
@@ -406,6 +411,20 @@ export default function Crm() {
     },
   ]
 
+  const box = [
+    { amount: '214', icon: <Zap size={24} className="text-blue-500" />, text: "Sequence started", bg: "bg-blue-100" },
+    { amount: '45%', icon: <Eye size={24} className="text-purple-500" />, text: "Open rate", bg: "bg-purple-100" },
+    { amount: '67%', icon: <Hand size={24} className="text-pink-500" />, text: "Click rate", bg: "bg-pink-100" },
+    { amount: '145', icon: <CircleDollarSign size={24} className="text-red-500" />, text: "Opportunities", bg: "bg-red-100" },
+    { amount: '26', icon: <CircleDollarSign size={24} className="text-yellow-500" />, text: "Conversion", bg: "bg-yellow-100" },
+ ];
+ const data = [
+    { name: "SEP", sent: 250, opens: 200, clicks: 150, opportunities: 100, conversions: 50 },
+    { name: "OCT", sent: 150, opens: 120, clicks: 90, opportunities: 60, conversions: 30 },
+    { name: "NOV", sent: 180, opens: 140, clicks: 100, opportunities: 80, conversions: 40 },
+    { name: "DEC", sent: 220, opens: 170, clicks: 130, opportunities: 90, conversions: 60 },
+];
+
   const [searchQuery, setSearchQuery] = useState("")
   const [activeTab, setActiveTab] = useState("Accounts")
 
@@ -415,7 +434,7 @@ export default function Crm() {
         {/* Navigation Tabs */}
         <div className="border-b border-gray-200 mb-6">
           <nav className="flex -mb-px">
-            {["Accounts", "People", "Opportunities", "Calls", "Meetings"].map((tab) => (
+            {["Analytics", "People", "Opportunities", "Calls", "Meetings"].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -504,48 +523,37 @@ export default function Crm() {
 
         {/* Accounts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 w-full">
-          {/* Accounts Grid */}
-          {activeTab === "Accounts" &&
-            accounts.map((account) => (
-              <div key={account.id} className="bg-white rounded-lg shadow overflow-hidden">
-                <div className="p-4">
-                  <div className="flex justify-between items-start mb-4">
-                    <div
-                      className={`${account.logoBackground} w-12 h-12 rounded-md flex items-center justify-center text-white`}
-                    >
-                      <img src={account.logo || "/placeholder.svg"} alt={account.name} className="w-8 h-8" />
-                    </div>
-                    <button className="text-gray-400 hover:text-gray-500">
-                      <MoreVertical className="h-5 w-5" />
-                    </button>
-                  </div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">{account.name}</h3>
-                  <div className="flex items-center text-sm text-gray-500 mb-1">
-                    <MapPin className="h-4 w-4 mr-1" />
-                    {account.location}
-                  </div>
-                  <div className="flex items-center text-sm text-gray-500 mb-4">
-                    <Globe className="h-4 w-4 mr-1" />
-                    {account.website}
-                  </div>
-                  <div className="flex items-center">
-                    <div className="flex -space-x-2 mr-2">
-                      {account.contactAvatars.map((avatar, index) => (
-                        <div
-                          key={index}
-                          className={`w-6 h-6 rounded-full flex items-center justify-center text-xs text-white border-2 border-white ${
-                            index % 3 === 0 ? "bg-blue-500" : index % 3 === 1 ? "bg-yellow-500" : "bg-green-500"
-                          }`}
-                        >
-                          {avatar}
-                        </div>
-                      ))}
-                    </div>
-                    <span className="text-sm text-gray-500">{account.contacts} Contacts</span>
-                  </div>
+        {activeTab === "Analytics" && (
+            <>
+            {box.map((item, index) => (
+                <div key={index} className="border border-gray-200 rounded-lg px-4 py-6 flex items-center gap-3 bg-white">
+                <div className={`p-3 rounded-full ${item.bg}`}>{item.icon}</div>
+                <div>
+                    <div className="text-2xl font-bold">{item.amount}</div>
+                    <div className="text-sm text-gray-500">{item.text}</div>
                 </div>
-              </div>
+                </div>
             ))}
+            {/* <div className="p-6 rounded-lg w-full">
+                <div className="h-[300px] md:h-[400px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={data} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
+                    <CartesianGrid stroke="#E5E7EB" strokeDasharray="0" />
+                    <XAxis dataKey="name" stroke="#4A5568" tick={{ fontSize: 12 }} />
+                    <YAxis stroke="#4A5568" tick={{ fontSize: 12 }} />
+                    <Tooltip contentStyle={{ backgroundColor: "#fff", borderRadius: "5px", padding: "10px" }} />
+                    <Legend />
+                    <Bar dataKey="conversions" stackId="a" fill="#6B21A8" barSize={40} />
+                    <Bar dataKey="opportunities" stackId="a" fill="#EC4899" barSize={40} />
+                    <Bar dataKey="clicks" stackId="a" fill="#F59E0B" barSize={40} />
+                    <Bar dataKey="opens" stackId="a" fill="#10B981" barSize={40} />
+                    <Bar dataKey="sent" stackId="a" fill="#1E40AF" barSize={40} />
+                    </BarChart>
+                </ResponsiveContainer>
+                </div>
+            </div> */}
+            </>
+        )}
 
           {activeTab === "People" && (
             <div className="col-span-full w-full overflow-x-auto">

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MoveUpRight, Plus, Ratio, Search, X } from "lucide-react";
+import { Bell, ChartSpline, ClipboardList, MoveUpRight, Plus, Ratio, Search, UsersRound, X } from "lucide-react";
 import MetricCard from "../components/MetricCard";
 import LiveFeed from "../components/LiveFeed";
 import TaskList from "../components/TaskList";
@@ -9,6 +9,7 @@ import { Calendar, CircleX, Clock3, FileText, NotepadText } from "lucide-react";
 import { RiEditCircleLine } from "react-icons/ri";
 import { IoVideocam } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import widget from "../assets/widget.png";
 
 export default function DashboardPage() {
   const [selectedView, setSelectedView] = useState("month");
@@ -37,35 +38,60 @@ export default function DashboardPage() {
 
           {/* MODAL FOR ADD WIDGET */}
           {isModalOpen && (
-            <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">
-              <div className="relative bg-white rounded-lg shadow-lg w-[500px] p-6">
-                {/* Modal Header */}
-                <div className="flex items-center justify-between pb-3">
-                  <h3 className="text-xl font-semibold">Add Widget</h3>
-                  <button
-                    onClick={() => setIsModalOpen(false)}
-                    className="text-gray-400 hover:text-gray-600"
-                  >
-                    <X />
-                  </button>
-                </div>
+        <div className="fixed inset-0 top-10 bottom-2.5 flex items-center justify-center bg-opacity-50 z-50">
+          <div className="relative bg-white rounded-lg shadow-lg p-6 w-[600px]">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between pb-3">
+              <h3 className="text-xl font-semibold">Add Widget</h3>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-gray-400 hover:text-gray-600 cursor-pointer"
+              >
+                <X />
+              </button>
+            </div>
 
-                <div className="max-w-md mx-auto">
-                  <div className="relative">
-                    <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <Search className="text-gray-400" />
-                    </div>
-                    <input
-                      type="search"
-                      id="default-search"
-                      className="block w-full px-4 py-3 border-green-400 ps-10 text-sm text-gray-900 border rounded-full bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="Search Mockups, Logos..."
-                    />
-                  </div>
+            {/* Search Input */}
+            <div className="mb-4">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <Search className="text-gray-400" />
                 </div>
+                <input
+                  type="search"
+                  id="default-search"
+                  className="block w-full px-4 outline-none py-3 pl-10 text-sm text-gray-900 border border-green-400 rounded-full bg-gray-50"
+                  placeholder="Search Mockups, Logos..."
+                />
               </div>
             </div>
-          )}
+
+            {/* Widget Grid */}
+            <div className="grid grid-cols-2 gap-4">
+              {[ 
+                { icon: <ChartSpline className="text-teal-600" size={18} />, title: "Stats" },
+                { icon: <Bell className="text-orange-400" size={18} />, title: "Live Feed" },
+                { icon: <ClipboardList className="text-purple-500" size={18} />, title: "Tasks" },
+                { icon: <UsersRound className="text-blue-400" size={18} />, title: "Top People" },
+              ].map((widgetItem, index) => (
+                <div key={index} className="border-none p-3 rounded-md shadow-md bg-white">
+                  <div className="bg-gray-200 p-3 rounded-md">
+                    <img src={widget} className="w-full h-40 bg-white border-none rounded-md" alt="Widget" />
+                  </div>
+                  <div className="flex items-center gap-2 mt-2 text-gray-700">
+                    {widgetItem.icon}
+                    <span className="font-medium">{widgetItem.title}</span>
+                  </div>
+                  <p className="text-gray-500 text-sm mt-1">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
 
           <div className="mb-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <MetricCard icon="mail" label="Emails Sent" value="1,245" iconColor="text-blue-600" bgColor="bg-blue-100" />
@@ -194,7 +220,7 @@ export default function DashboardPage() {
             </div>
           )}
 
-          <div className="mt-6 max-w-[60%] border-none rounded-lg shadow-md bg-white">
+          <div className="mt-3 border-none rounded-lg shadow-md bg-white">
             <TopPeople />
           </div>
         </main>

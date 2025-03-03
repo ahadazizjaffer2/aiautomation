@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Play, Pause, MoreHorizontal, Search, Filter, PlusCircle, ChevronDown, CheckCircle, AlertCircle, Circle, ArrowUpDown, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 function App() {
   const [campaigns, setCampaigns] = useState([
@@ -268,7 +269,9 @@ function App() {
                     />
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{campaign.name}</div>
+                    <Link to='/campaigns/target'>
+                      <div className="text-sm font-medium text-gray-900">{campaign.name}</div>
+                    </Link>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${

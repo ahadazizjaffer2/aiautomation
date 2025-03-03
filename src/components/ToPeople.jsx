@@ -69,7 +69,7 @@ export default function TopPeople() {
       <div className="min-w-full overflow-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b text-sm text-muted-foreground">
+            <tr className="border-b border-gray-300 text-sm text-muted-foreground">
               <th className="whitespace-nowrap px-4 py-3 text-left font-medium">
                 <input type="checkbox" className="rounded border-muted cursor-pointer" />
               </th>
@@ -81,7 +81,7 @@ export default function TopPeople() {
           </thead>
           <tbody>
             {people.map((person) => (
-              <tr key={person.email} className="border text-sm">
+              <tr key={person.email} className="border border-gray-300 text-sm">
                 <td className="px-4 py-3">
                   <input type="checkbox" className="rounded border-muted cursor-pointer" />
                 </td>
@@ -110,7 +110,7 @@ export default function TopPeople() {
       </div>
 
       {/* Floating Contact */}
-      <div className="fixed bottom-6 right-6 flex w-96 items-center gap-3 rounded-full border-b bg-background px-5 py-3 pr-4 shadow-lg">
+      {/* <div className="fixed bottom-6 right-6 flex w-96 items-center gap-3 rounded-full border-b bg-background px-5 py-3 pr-4 shadow-lg">
         <img
           src="https://img.pikbest.com/origin/09/26/70/62VpIkbEsTv9G.png!sw800"
           alt="Benjamin Cooper"
@@ -131,7 +131,7 @@ export default function TopPeople() {
             <MdMoreVert className="h-5 w-5" />
           </button>
         </div>
-      </div>
+      </div> */}
 
       {/* Modal */}
       {isModalOpen && (
