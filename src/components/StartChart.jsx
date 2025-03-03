@@ -39,7 +39,23 @@ function StatsChart() {
 
   return (
     <div className="space-y-6">
-      <canvas ref={canvasRef} width={200} height={200} className="mx-auto" />
+      <div className="relative flex items-center justify-center group w-fit mx-auto">
+        {/* Canvas (Moves Left on Hover) */}
+        <canvas
+          ref={canvasRef}
+          width={200}
+          height={200}
+          className="transition-transform duration-300 ease-in-out transform group-hover:-translate-x-9"
+        />
+
+        {/* Text (Appears on Hover) */}
+        <div
+          className="absolute left-[110%] opacity-0 translate-x-2 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:translate-x-0"
+        >
+          <div className="text-2xl font-semibold">2</div>
+          <div className="text-sm text-muted-foreground">Replies</div>
+        </div>
+      </div>
       <div className="grid grid-cols-3 gap-4 text-center">
         <div>
           <div className="text-2xl font-semibold">200</div>
