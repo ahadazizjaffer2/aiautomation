@@ -117,10 +117,7 @@ function App() {
         {/* Filters and actions */}
         <div className="flex flex-col md:flex-row gap-2 justify-between mb-6">
           <div className="relative rounded-md w-64">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Search size={18} className="text-gray-400" />
-            </div>
-            <div className="relative flex items-center w-80">
+            <div className="relative flex items-center w-72">
             <Search size={20} className="absolute left-3 text-gray-400" />
             <input
               type="text"
@@ -152,7 +149,7 @@ function App() {
               {/* Status dropdown */}
               {showStatusDropdown && (
                 <div 
-                  className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
+                  className="origin-top-right absolute right-0 left-1 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
                   onClick={handleDropdownClick}
                 >
                   <div className="py-1">
@@ -189,7 +186,7 @@ function App() {
               {/* Sort dropdown */}
               {showSortDropdown && (
                 <div 
-                  className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
+                  className="origin-top-right absolute right-0 left-1 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
                   onClick={handleDropdownClick}
                 >
                   <div className="py-1">
