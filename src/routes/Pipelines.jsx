@@ -33,15 +33,15 @@ const LeadCard = ({ name }) => {
 
 export default function Pipelines() {
   return (
-    <div className="pl-[130px] pt-[30px] bg-gray-100 min-h-screen overflow-x-auto flex justify-center">
+    <div className="px-[10px] pt-[30px] bg-gray-100 min-h-screen overflow-x-auto flex justify-center">
       <div className="w-full max-w-[1600px]">
         <h1 className="text-3xl font-bold">Lead’s Pipeline</h1>
         <p className="text-gray-500 mb-6">Monitor the current stage of each lead in the sales process.</p>
-        <div className="grid grid-cols-6 gap-4 w-max justify-items-center">
+        <div className="grid md:grid-cols-6 gap-4 justify-items-center">
           {pipelineStages.map((stage) => (
             <div key={stage.name} className="flex justify-center">
-              <div className="w-full max-w-[256px]">
-                <div className={`p-3 rounded-lg text-center ${stage.color} w-56 h-10 flex items-center justify-center`}>{stage.name}</div>
+              <div className="w-full md:max-w-[256px]">
+                <div className={`p-3 rounded-lg text-center ${stage.color} md:w-56 w-70 h-10 flex items-center justify-center`}>{stage.name}</div>
                 <div className="space-y-3 mt-3">
                   {stage.leads.map((lead) => (
                     <LeadCard key={lead} name={lead} />

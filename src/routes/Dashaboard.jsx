@@ -1,13 +1,11 @@
 import { useState } from "react";
-import { Bell, ChartSpline, ClipboardList, MoveUpRight, Plus, Ratio, Search, UsersRound, X } from "lucide-react";
+import { Bell, ChartSpline, ClipboardList, MoveUpRight, Plus, Ratio, Search, UsersRound, X, Calendar, Clock3, FileText } from "lucide-react";
 import MetricCard from "../components/MetricCard";
 import LiveFeed from "../components/LiveFeed";
 import TaskList from "../components/TaskList";
 import StatsChart from "../components/StartChart";
 import TopPeople from "../components/ToPeople";
-import { Calendar, CircleX, Clock3, FileText, NotepadText } from "lucide-react";
 import { RiEditCircleLine } from "react-icons/ri";
-import { IoVideocam } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import widget from "../assets/widget.png";
 
@@ -17,10 +15,10 @@ export default function DashboardPage() {
   const [isPlusModalOpen, setIsPlusModalOpen] = useState(false); // State for second modal
 
   return (
-    <div className="ps-18 bg-[rgb(255,255,255)]">
+    <div className="pl-[10px] md:pl-[20px] bg-[rgb(251,251,251)]">
       <div className="min-h-screen bg-background">
-        <main className="container mx-auto p-6">
-          <div className="mb-8 flex items-center justify-between">
+        <main className="container mx-auto p-3 md:p-6">
+          <div className="mb-8 flex items-center justify-between flex-col md:flex-row gap-4">
             <div>
               <h2 className="text-2xl font-bold">Evening, Beetoo 👋</h2>
               <p className="text-sm text-gray-400 text-semibold">
@@ -36,71 +34,69 @@ export default function DashboardPage() {
             </button>
           </div>
 
-          {/* MODAL FOR ADD WIDGET */}
           {isModalOpen && (
-        <div className="fixed inset-0 top-10 bottom-2.5 flex items-center justify-center bg-opacity-50 z-50">
-          <div className="relative bg-white rounded-lg shadow-lg p-6 w-[600px]">
-            {/* Modal Header */}
-            <div className="flex items-center justify-between pb-3">
-              <h3 className="text-xl font-semibold">Add Widget</h3>
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="text-gray-400 hover:text-gray-600 cursor-pointer"
-              >
-                <X />
-              </button>
-            </div>
+          <div className="fixed inset-0 top-10 flex items-center justify-center bg-opacity-50 z-50 p-[30px]">
+            <div className="relative bg-white rounded-lg shadow-lg p-3 md:p-6 w-[600px]">
+              
+              <div className="flex items-center justify-between pb-3">
+                <h3 className="text-xl font-semibold">Add Widget</h3>
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="text-gray-400 hover:text-gray-600 cursor-pointer"
+                >
+                  <X />
+                </button>
+              </div>
 
-            {/* Search Input */}
-            <div className="mb-4">
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <Search className="text-gray-400" />
+              <div className="mb-4">
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <Search className="text-gray-400" />
+                  </div>
+                  <input
+                    type="search"
+                    id="default-search"
+                    className="block w-full px-4 outline-none py-3 pl-10 text-sm text-gray-900 border border-green-400 rounded-full bg-gray-50"
+                    placeholder="Search Mockups, Logos..."
+                  />
                 </div>
-                <input
-                  type="search"
-                  id="default-search"
-                  className="block w-full px-4 outline-none py-3 pl-10 text-sm text-gray-900 border border-green-400 rounded-full bg-gray-50"
-                  placeholder="Search Mockups, Logos..."
-                />
+              </div>
+              <div className="h-[70vh] overflow-auto">
+                <div className="grid md:grid-cols-2 gap-4">
+                  {[ 
+                    { icon: <ChartSpline className="text-teal-600" size={18} />, title: "Stats" },
+                    { icon: <Bell className="text-orange-400" size={18} />, title: "Live Feed" },
+                    { icon: <ClipboardList className="text-purple-500" size={18} />, title: "Tasks" },
+                    { icon: <UsersRound className="text-blue-400" size={18} />, title: "Top People" },
+                  ].map((widgetItem, index) => (
+                    <div key={index} className="border-none p-3 rounded-md shadow-md bg-white">
+                      <div className="bg-gray-200 p-3 rounded-md">
+                        <img src={widget} className="w-full h-40 bg-white border-none rounded-md" alt="Widget" />
+                      </div>
+                      <div className="flex items-center gap-2 mt-2 text-gray-700">
+                        {widgetItem.icon}
+                        <span className="font-medium">{widgetItem.title}</span>
+                      </div>
+                      <p className="text-gray-500 text-sm mt-1">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-
-            {/* Widget Grid */}
-            <div className="grid grid-cols-2 gap-4">
-              {[ 
-                { icon: <ChartSpline className="text-teal-600" size={18} />, title: "Stats" },
-                { icon: <Bell className="text-orange-400" size={18} />, title: "Live Feed" },
-                { icon: <ClipboardList className="text-purple-500" size={18} />, title: "Tasks" },
-                { icon: <UsersRound className="text-blue-400" size={18} />, title: "Top People" },
-              ].map((widgetItem, index) => (
-                <div key={index} className="border-none p-3 rounded-md shadow-md bg-white">
-                  <div className="bg-gray-200 p-3 rounded-md">
-                    <img src={widget} className="w-full h-40 bg-white border-none rounded-md" alt="Widget" />
-                  </div>
-                  <div className="flex items-center gap-2 mt-2 text-gray-700">
-                    {widgetItem.icon}
-                    <span className="font-medium">{widgetItem.title}</span>
-                  </div>
-                  <p className="text-gray-500 text-sm mt-1">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  </p>
-                </div>
-              ))}
-            </div>
           </div>
-        </div>
-      )}
+        )}
 
 
-          <div className="mb-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mb-8 grid gap-3 md:p-6 sm:grid-cols-2 lg:grid-cols-4">
             <MetricCard icon="mail" label="Emails Sent" value="1,245" iconColor="text-blue-600" bgColor="bg-blue-100" />
             <MetricCard icon="users" label="New Users" value="312" iconColor="text-green-600" bgColor="bg-green-100" />
             <MetricCard icon="calendar" label="Meetings" value="27" iconColor="text-purple-600" bgColor="bg-purple-100" />
             <MetricCard icon="briefcase" label="Projects" value="8" iconColor="text-orange-600" bgColor="bg-orange-100" />
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="grid gap-3 md:p-6 lg:grid-cols-3">
             <div className="p-6 border-none rounded-lg shadow-md bg-white">
               <h3 className="font-semibold mb-4">Live feed</h3>
               <LiveFeed />
@@ -113,9 +109,9 @@ export default function DashboardPage() {
                   <MoveUpRight />
                 </Link>
                 </div>
-                <div className="flex justify-center">
+                <div className="flex justify-center gap-2">
                   <button
-                    className={`px-4 py-2 rounded-full text-sm ${
+                    className={`px-2 md:px-4 py-1 md:py-2 rounded-full text-sm ${
                       selectedView === "month"
                         ? "bg-gray-500 text-white"
                         : "bg-gray-200 text-gray-400"
@@ -125,7 +121,7 @@ export default function DashboardPage() {
                     Month view
                   </button>
                   <button
-                    className={`px-4 py-2 rounded-full text-sm ${
+                    className={`px-2 md:px-4 py-1 md:py-2 rounded-full text-sm ${
                       selectedView === "week"
                         ? "bg-gray-500 text-white"
                         : "bg-gray-200 text-gray-400"
@@ -138,7 +134,7 @@ export default function DashboardPage() {
               <StatsChart />
             </div>
 
-            <div className="p-6 border-none rounded-lg shadow-md bg-white">
+            <div className="p-3 md:p-6 border-none rounded-lg shadow-md bg-white">
               <div className="flex justify-between items-center">
                 <div className="mb-4 flex items-center gap-3">
                   <h3 className="font-semibold">Tasks</h3>
@@ -157,11 +153,9 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* MODAL FOR PLUS BUTTON */}
           {isPlusModalOpen && (
             <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">
-              <div className="relative bg-white rounded-lg shadow-lg w-[400px] p-6">
-                {/* Modal Header */}
+              <div className="relative bg-white rounded-lg shadow-lg w-[90%] md:w-[400px] p-3 md:p-6">
                 <div className="flex items-center justify-between pb-3">
                   <h3 className="text-xl font-semibold">Add Task</h3>
                   <button

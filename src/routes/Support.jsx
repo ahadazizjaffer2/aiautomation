@@ -37,7 +37,7 @@ const Support = () => {
 
                 <form onSubmit={handleSubmit}>
                     {/* Request Type */}
-                    <div className="flex gap-8 mb-6">
+                    <div className="flex gap-4 text-sm md:text-md md:gap-8 mb-6 flex-col md:flex-row">
                         <label className="flex items-center text-gray-500">
                             <input
                                 type="checkbox"

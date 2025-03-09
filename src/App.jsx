@@ -1,14 +1,13 @@
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
-import DashboardPage from './routes/Dashaboard';
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import Layout from './Layout/Layout';
+import DashboardPage from './routes/Dashaboard';
 import Calendar from './routes/calender';
 import Analytics from './routes/Analytics';
 import Login from './routes/Login';
 import Signup from './routes/Signup';
-// New Work Here
 import Pipelines from './routes/Pipelines';
 import WebsiteVisitor from './routes/WebsiteVisitor';
 import MultiBox from './routes/Multibox';
@@ -18,7 +17,6 @@ import Crm from './routes/Crm';
 import Campaigns from './routes/Campaigns';
 import Settings from './routes/Settings';
 import Support from './routes/Support';
-import AiLeadScouts from './routes/AILeadScouts';
 import CompaignTarget from './routes/CompaignTarget';
 
 function App() {
@@ -34,7 +32,6 @@ function App() {
           <Route path='/campaigns/target' element={ <CompaignTarget /> } />
           <Route path="/calender" element={<Calendar />} />
           <Route path="/analytics" element={<Analytics />} />
-          {/* new work here */}
           <Route path="/pipelines" element={<Pipelines />} />           
           <Route path="/website-visitor" element={<WebsiteVisitor />} /> 
           <Route path="/multi-box" element={<MultiBox />} />           

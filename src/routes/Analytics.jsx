@@ -29,9 +29,9 @@ function Analytics() {
     const [selectedView, setSelectedView] = useState("month");
 
     return (
-        <div className="p-6 space-y-8 bg-gray-50 min-h-screen sm:px-8 md:px-16 lg:px-32 ps-20">
+        <div className="p-6 space-y-8 bg-gray-50 min-h-screen sm:px-8 md:px-16 lg:px-32 ">
             {/* Filter Buttons */}
-            <div className="flex flex-wrap justify-between items-center gap-4">
+            <div className="flex flex-wrap justify-center md:justify-between items-center gap-4">
                 <div className="flex rounded-full bg-gray-200 p-1">
                     <button
                         className={`px-4 py-2 rounded-full text-sm transition-all duration-300 ${
@@ -51,17 +51,17 @@ function Analytics() {
                     </button>
                 </div>
 
-                <div className="flex items-center gap-4">
-                    <button className="flex items-center gap-2 text-gray-600 border border-gray-300 py-2 px-4 rounded-full">
-                        <Share2 className="h-4 w-4" />
+                <div className="flex items-center gap-2 md:gap-4">
+                    <button className="flex items-center gap-2 text-gray-600 border border-gray-300 py-2 px-4 rounded-full md:text-md text-sm">
+                        <Share2 className="md:h-4 md:w-4 w-3 h-3" />
                         Share
                     </button>
                     <div className="relative">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className="px-4 py-2 border border-gray-300 text-gray-600 rounded-full flex gap-1 items-center"
+                            className="px-4 py-2 border border-gray-300 text-gray-600 rounded-full flex gap-1 items-center text-sm md:text-md"
                         >
-                            All Statuses <ChevronDown />
+                            All Statuses <ChevronDown className="md:h-auto h-5" />
                         </button>
                         {isOpen && (
                             <div className="absolute z-10 mt-2 bg-white shadow-md w-44 rounded-lg">
@@ -92,7 +92,7 @@ function Analytics() {
             </div>
 
             {/* Chart Section */}
-            <div className="p-6 rounded-lg">
+            <div className="p-0 md:p-6 rounded-lg">
                 <div className="h-[300px] md:h-[400px] w-full">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={data} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>

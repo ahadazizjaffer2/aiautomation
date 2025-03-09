@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { MdSearch, MdMoreVert, MdPhone, MdChat } from "react-icons/md";
-import { FiPlus, FiCheck, FiClock } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 import { MdArrowOutward } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
-import { FileMinus, MailOpen, User } from "lucide-react";
+import { CircleCheck, Clock, FileMinus, MailOpen, Search, User } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 
@@ -36,11 +35,11 @@ export default function TopPeople() {
     setIsSecondModalOpen(true);
     setIsModalOpen(false);
   }
-
+  
   return (
     <div className="p-6">
       <div className="mb-6 flex items-center justify-between">
-        <h3 className="font-semibold">Top People</h3>
+        <h3 className="font-semibold">Top Lead</h3>
         <button className="ml-auto">
           <Link to='/analytics'>
             <MdArrowOutward className="h-5 w-5 text-muted-foreground" />
@@ -50,11 +49,11 @@ export default function TopPeople() {
 
       <div className="mb-6 flex items-center gap-4">
         <div className="relative flex-1">
-          <MdSearch className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" />
+          <Search size={20} className="absolute text-gray-400 left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search..."
-            className="w-full rounded-full border border-gray-300 bg-background px-9 py-2 text-sm focus:outline-none cursor-pointer"
+            className="w-full rounded-full border border-gray-200 bg-background px-9 py-2 text-sm focus:outline-none cursor-pointer"
           />
         </div>
         <button
@@ -85,23 +84,20 @@ export default function TopPeople() {
                 <td className="px-4 py-3">
                   <input type="checkbox" className="rounded border-muted cursor-pointer" />
                 </td>
-                <td className="px-4 py-3">{person.email}</td>
-                <td className="px-4 py-3">{person.contact}</td>
-                <td className="px-4 py-3">{person.provider}</td>
+                <td className="px-4 py-3 text-gray-400">{person.email}</td>
+                <td className="px-4 py-3 text-gray-400">{person.contact}</td>
+                <td className="px-4 py-3 text-gray-400 flex gap-1"><FcGoogle size={20} /> {person.provider}</td>
                 <td className="px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    {person.status === "Verified" ? (
-                      <>
-                        <FiCheck className="h-4 w-4 text-blue-500" />
-                        <span className="text-blue-500">Verified</span>
-                      </>
-                    ) : (
-                      <>
-                        <FiClock className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-muted-foreground">Not yet contacted</span>
-                      </>
-                    )}
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 bg-blue-50 rounded-full px-2 py-0.5">
+                    <CircleCheck size={17} className="text-blue-500" />
+                    <span className="text-blue-500">Verified</span>
                   </div>
+                  <div className="flex items-center gap-1 bg-gray-100 rounded-full p-1.5">
+                    <Clock className="h-4 w-4 text-gray-400" />
+                    <span className="text-xs text-gray-400">Not yet contacted</span>
+                  </div>
+                </div>
                 </td>
               </tr>
             ))}

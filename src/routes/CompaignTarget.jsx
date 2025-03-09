@@ -1,25 +1,23 @@
-"use client"
-
 import { useState } from "react"
 import {
-  Search,
-  MoreVertical,
-  Plus,
-  MapPin,
-  Globe,
-  ChevronDown,
-  Play,
-  Pause,
-  CircleCheck,
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  Sparkles,
-  Phone,
-  Zap,
-  Eye,
-  Hand,
-  CircleDollarSign,
+Search,
+MoreVertical,
+Plus,
+MapPin,
+Globe,
+ChevronDown,
+Play,
+Pause,
+CircleCheck,
+ChevronLeft,
+ChevronRight,
+Clock,
+Sparkles,
+Phone,
+Zap,
+Eye,
+Hand,
+CircleDollarSign,
 } from "lucide-react"
 
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from "recharts";
@@ -931,4 +929,3 @@ export default function CompaignTarget() {
     </div>
   )
 }
-

@@ -12,9 +12,9 @@ const Inbox = () => {
   const [selectedTab, setSelectedTab] = useState("All Inboxes");
 
   return (
-    <div className="flex min-h-screen bg-gray-200 text-gray-400 pl-[120px] pt-[40px] pr-[120px]">
+    <div className="flex min-h-screen bg-gray-200 text-gray-400 px-[5px] md:pl-[120px] pt-[40px] md:pr-[120px] flex-col md:flex-row">
       {/* Sidebar */}
-      <div className="w-[40%] p-6 border-r border-gray-300 bg-white rounded-2xl mr-6">
+      <div className="md:w-[40%] p-6 border-r border-gray-300 bg-white rounded-2xl md:mr-6">
       <div className="mb-4 flex space-x-4">
           {['All Inboxes', 'Emails', 'SMS'].map((tab) => (
             <span
@@ -57,15 +57,18 @@ const Inbox = () => {
       </div>
 
       {/* Main Content Container */}
-      <div className="flex-1">
+      <div className="flex-1 mt-6 md:mt-0">
         {/* Buttons Container */}
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center mb-4 overflow-auto">
           <div className="bg-white p-1 rounded-xl flex space-x-2">
             <button className="p-2 rounded ml-[25px] mr-[25px]">Archive</button>
             <button className="p-2 rounded ml-[25px] mr-[25px]">Snooze</button>
             <button className="p-2 rounded ml-[25px] mr-[25px]">Delete</button>
           </div>
-          <button className="p-3 bg-white rounded-xl">About Lead</button>
+          <div className="bg-white p-1 rounded-xl flex space-x-2">
+            <button className="p-2 bg-white rounded-xl  whitespace-nowrap">About Lead</button>
+          </div>
+          
         </div>
         {/* Email Content */}
         <div className="flex-1 flex flex-col bg-white rounded-2xl p-3 mb-[10px]">

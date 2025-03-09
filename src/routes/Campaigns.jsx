@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Play, Pause, MoreHorizontal, Search, Filter, PlusCircle, ChevronDown, CheckCircle, AlertCircle, Circle, ArrowUpDown, X } from 'lucide-react';
+import { Play, Pause, MoreHorizontal, Search, Filter, PlusCircle, ChevronDown, CheckCircle, AlertCircle, Circle, ArrowUpDown, X, Zap, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 function App() {
@@ -116,27 +116,27 @@ function App() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Filters and actions */}
         <div className="flex justify-between mb-6">
-          <div className="relative rounded-md shadow-sm w-64">
+          <div className="relative rounded-md w-64">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search size={18} className="text-gray-400" />
             </div>
             <div className="relative flex items-center w-80">
-  <Search size={20} className="absolute left-3 text-gray-400" />
-  <input
-    type="text"
-    className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 shadow-sm text-gray-700"
-    placeholder="|Search..."
-    value={searchQuery}
-    onChange={(e) => setSearchQuery(e.target.value)}
-  />
-</div>
+            <Search size={20} className="absolute left-3 text-gray-400" />
+            <input
+              type="text"
+              className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 outline-none text-gray-700"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
 
           </div>
           <div className="flex space-x-4">
             <div className="relative">
               <button
                 type="button"
-                className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+                className="inline-flex items-center cursor-pointer justify-center w-full rounded-full border border-gray-300 px-4 py-2 bg-white text-sm font-medium gap-1 text-gray-400 hover:bg-gray-50 focus:outline-none"
                 id="filter-menu"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -144,7 +144,7 @@ function App() {
                   setShowSortDropdown(false);
                 }}
               >
-                <Filter size={18} className="mr-2 text-gray-400" />
+                <Zap size={18} className='text-gray-400' />
                 {statusFilter}
                 <ChevronDown size={16} className="ml-2 text-gray-400" />
               </button>
@@ -173,7 +173,7 @@ function App() {
             <div className="relative">
               <button
                 type="button"
-                className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+                className="inline-flex justify-center cursor-pointer w-full rounded-full border border-gray-300 px-4 py-2 bg-white text-sm font-medium gap-1 text-gray-400 hover:bg-gray-50 focus:outline-none"
                 id="sort-menu"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -210,10 +210,10 @@ function App() {
             </div>
             <button
               type="button"
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-500 hover:bg-teal-600 focus:outline-none"
+              className="inline-flex cursor-pointer items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full text-white bg-teal-600 hover:bg-teal-600"
               onClick={() => setShowNewCampaignModal(true)}
             >
-              <PlusCircle size={18} className="mr-2" />
+              <Plus size={18} className="mr-2" />
               Add new
             </button>
           </div>
@@ -306,9 +306,10 @@ function App() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {campaign.clicks}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{campaign.replies}</div>
-                    <div className="text-xs text-gray-500">{campaign.replyRate}%</div>
+                  <td className="px-6 py-4 whitespace-nowrap flex items-center gap-1">
+                    <div className="text-sm text-gray-400 font-bold">{campaign.replies}</div>
+                    <p className='w-0.5 h-4 border text-gray-400 rounded'></p>
+                    <div className="text-xs text-gray-400">{campaign.replyRate}%</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {campaign.opportunities}

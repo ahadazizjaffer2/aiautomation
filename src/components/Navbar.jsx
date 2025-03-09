@@ -1,9 +1,6 @@
-// const [isProfileOpen, setIsProfileOpen] = useState(false);
-// const [isOrgOpen, setIsOrgOpen] = useState(false);
-
 import React, { useState, useEffect } from 'react';
-import { Bell, ChevronDown, User, HelpCircle, Settings, LogOut, Plus, X, Briefcase } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Bell, ChevronDown, User, HelpCircle, Settings, LogOut, Plus, X, Briefcase, Menu } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 const Navbar = () => {
@@ -16,6 +13,7 @@ const Navbar = () => {
   const [isOrgOpen, setIsOrgOpen] = useState(false);
   const navigate = useNavigate();
   const [selectedFilter, setSelectedFilter] = useState('All');
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // For toggling the menu on mobile
 
   const handleCreateWorkspace = () => {
     console.log("New Workspace Created:", workspaceName, workspaceID);
@@ -67,6 +65,8 @@ const Navbar = () => {
     }
   ];
 
+  const location = useLocation();
+
   const filteredNotifications = selectedFilter === "All" 
     ? notifications 
     : notifications.filter(notification => notification.type === selectedFilter);
@@ -80,6 +80,7 @@ const Navbar = () => {
     setIsNotificationOpen(false);
     setIsProfileOpen(false);
     setIsOrgOpen(false);
+    setIsMenuOpen(false);
   };
 
   useEffect(() => {
@@ -94,31 +95,46 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="border-b border-gray-200 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="border-b border-gray-200 bg-white w-full flex ">
+        <div className="max-w-9xl mx-auto px-2 ml-12 md:ml-16 sm:px-3 lg:px-8 w-full">
           <div className="flex items-center justify-between h-16">
             
             {/* Left side - Logo */}
             <div className="flex items-center">
               <span className="text-xl font-bold">Dashboard</span>
             </div>
-            <div>
-              <ul className='flex gap-5'>
-                <Link to='/'>
-                  <li>Home</li>
-                </Link>
-                <Link to='/crm'>
-                  <li>AI CRM</li>
-                </Link>
-                <Link to="/campaigns">
-  <li>Campaigns</li>
-</Link>
+            <div className="hidden md:flex">
+        <ul className="flex gap-5">
+          <Link to="/" className={`pb-2 ${location.pathname === "/" ? "border-b-2 border-green-500" : ""}`}>
+            <li>Home</li>
+          </Link>
+          <Link to="/crm" className={`pb-2 ${location.pathname === "/crm" ? "border-b-2 border-green-500" : ""}`}>
+            <li>AI CRM</li>
+          </Link>
+          <Link to="/campaigns" className={`pb-2 ${location.pathname === "/campaigns" ? "border-b-2 border-green-500" : ""}`}>
+            <li>Campaigns</li>
+          </Link>
+        </ul>
+      </div>
 
-              </ul>
-            </div>
+            
 
             {/* Right Side - Dropdowns */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center md:space-x-2 gap-1">
+
+              {/* Mobile Menu Button */}
+              <div className="md:hidden">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    closeAllDropdowns();
+                    setIsMenuOpen(!isMenuOpen);
+                  }}
+                  className="p-1 md:p-2 border border-gray-300 text-gray-600 bg-gray-200 rounded-full cursor-pointer"
+                >
+                  <Menu size={22} />
+                </button>
+              </div>
 
               {/* Notification Dropdown */}
               <div className="relative dropdown">
@@ -128,66 +144,66 @@ const Navbar = () => {
                     closeAllDropdowns();
                     setIsNotificationOpen(!isNotificationOpen);
                   }}
-                  className="p-1.5 border border-gray-300 text-gray-600 bg-gray-200 rounded-full cursor-pointer flex gap-1 items-center"
+                  className="p-1 md:p-1.5 border border-gray-300 text-gray-600 bg-gray-200 rounded-full cursor-pointer flex gap-1 items-center"
                 >
-                  <Bell />
+                  <Bell size={22}/>
                 </button>
 
                 {isNotificationOpen && (
-        <div className="absolute -right-10 mt-4 bg-white shadow-lg w-80 rounded-lg px-1 py-3 z-10">
-          <div className='flex gap-2 items-center p-2'>
-              <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    closeAllDropdowns();
-                    setIsNotificationOpen(!isNotificationOpen);
-                  }}
-                  className="p-1 border border-gray-300 text-gray-600 bg-gray-200 rounded-full cursor-pointer flex gap-1 items-center"
-                >
-                <X size={16} />
-                </button>
-            <span>Notifications</span>
-          </div>
+                  <div className="absolute -left-50 mt-4 bg-white shadow-lg w-80 rounded-lg px-1 py-3 z-10">
+                    <div className='flex gap-2 items-center p-2'>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          closeAllDropdowns();
+                          setIsNotificationOpen(!isNotificationOpen);
+                        }}
+                        className="p-1 border border-gray-300 text-gray-600 bg-gray-200 rounded-full cursor-pointer flex gap-1 items-center"
+                      >
+                        <X size={16} />
+                      </button>
+                      <span>Notifications</span>
+                    </div>
 
-          {/* Filter Options */}
-          <ul className='flex gap-3 p-2 text-[15px] font-semibold cursor-pointer'>
-            {["All", "Unread", "Opened", "Clicked", "Hot lead"].map((filter) => (
-              <li 
-                key={filter} 
-                className={selectedFilter === filter ? "text-blue-500" : ""}
-                onClick={() => setSelectedFilter(filter)}
-              >
-                {filter}
-              </li>
-            ))}
-          </ul>
+                    {/* Filter Options */}
+                    <ul className='flex gap-3 p-2 text-[15px] font-semibold cursor-pointer'>
+                      {["All", "Unread", "Opened", "Clicked", "Hot lead"].map((filter) => (
+                        <li 
+                          key={filter} 
+                          className={selectedFilter === filter ? "text-blue-500" : ""}
+                          onClick={() => setSelectedFilter(filter)}
+                        >
+                          {filter}
+                        </li>
+                      ))}
+                    </ul>
 
-          {/* Filtered Notifications */}
-          {filteredNotifications.map((val, index) => (
-            <div key={index} className='flex gap-3 px-3 mt-5'>
-              <img src={val.img} className='w-9 h-9 rounded-full object-cover' alt="" />
-              <div>
-                <div className='flex text-[15px] gap-2 items-center'>
-                  <h2>{val.name}</h2>
-                  <p className='text-gray-400'>{val.designation}</p>
-                </div>
-                <p>{val.title}</p>
-                <div className='flex items-center gap-1'>
-                  <p className={`${val.bg} px-1.5 py-0.5 ${val.color} rounded-full text-[13px] inline-flex items-center`}>
-                    {val.type}
-                  </p>
-                  <p>{val.time}</p>
-                </div>
-              </div>
-            </div>
-          ))}
+                    {/* Filtered Notifications */}
+                    {filteredNotifications.map((val, index) => (
+                      <div key={index} className='flex gap-3 px-3 mt-5'>
+                        <img src={val.img} className='w-9 h-9 rounded-full object-cover' alt="" />
+                        <div>
+                          <div className='flex text-[15px] gap-2 items-center'>
+                            <h2>{val.name}</h2>
+                            <p className='text-gray-400'>{val.designation}</p>
+                          </div>
+                          <p>{val.title}</p>
+                          <div className='flex items-center gap-1'>
+                            <p className={`${val.bg} px-1.5 py-0.5 ${val.color} rounded-full text-[13px] inline-flex items-center`}>
+                              {val.type}
+                            </p>
+                            <p>{val.time}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
 
-          {/* Show message if no notifications */}
-          {filteredNotifications.length === 0 && (
-            <p className="text-center text-gray-500 mt-3">No notifications found</p>
-          )}
-        </div>
-      )}
+                    {/* Show message if no notifications */}
+                    {filteredNotifications.length === 0 && (
+                      <p className="text-center text-gray-500 mt-3">No notifications found</p>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Profile Dropdown */}
@@ -198,7 +214,7 @@ const Navbar = () => {
                     closeAllDropdowns();
                     setIsProfileOpen(!isProfileOpen);
                   }}
-                  className="p-1.5 border cursor-pointer border-gray-300 text-gray-600 bg-gray-200 rounded-full flex gap-1 items-center"
+                  className="p-1 md:p-1.5 border cursor-pointer border-gray-300 text-gray-600 bg-gray-200 rounded-full flex gap-1 items-center"
                 >
                   <User size={22} />
                 </button>
@@ -238,7 +254,8 @@ const Navbar = () => {
                   }}
                   className="p-1.5 border border-gray-300 text-gray-600 rounded-full flex gap-1 items-center"
                 >
-                  <span>My Organization</span>
+                  <span className='hidden md:block'>My Organization</span>
+                  <span className='block md:hidden text-sm'>Org</span>
                   <ChevronDown className="w-4 h-4" />
                 </button>
 
@@ -267,7 +284,7 @@ const Navbar = () => {
               </div>
             </div>
             {isModalOpen && (<div className="fixed inset-0 flex items-center justify-center">
-              <div className="bg-white w-96 p-6 rounded-lg shadow-lg modal">
+              <div className="bg-white md:w-96 w-[80%] z-[150] p-6 rounded-lg shadow-lg modal">
                 <div className="flex justify-between items-center">
                   <h2 className="text-lg font-semibold">Create New Workspace</h2>
                   <button onClick={() => setIsModalOpen(false)} className="text-gray-500 hover:text-gray-700">
@@ -302,15 +319,15 @@ const Navbar = () => {
                   />
                 </div>
 
-                <div className="mt-6 flex justify-between">
-                  <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 border rounded-md">
+                <div className="mt-6 flex justify-between gap-1">
+                  <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 border rounded-md text-sm">
                     Cancel
                   </button>
                   <button 
                     onClick={handleCreateWorkspace} 
-                    className="px-4 py-2 bg-teal-500 text-white rounded-md flex items-center"
+                    className="px-4 py-2 bg-teal-500 text-white rounded-md flex items-center text-sm whitespace-nowrap"
                   >
-                    <Briefcase className="w-4 h-4 mr-2" />
+                    <Briefcase className="w-4 h-4 mr-2 md:block hidden" />
                     Create Workspace
                   </button>
                 </div>
@@ -318,26 +335,27 @@ const Navbar = () => {
               </div>
               )}
 
-
           </div>
         </div>
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden border-t border-gray-200 absolute top-16 right-30 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 border-none">
+            <ul className='flex flex-col gap-2 p-4 justify-center items-center '>
+              <Link to='/'>
+                <li>Home</li>
+              </Link>
+              <Link to='/crm'>
+                <li>AI CRM</li>
+              </Link>
+              <Link to="/campaigns">
+                <li>Campaigns</li>
+              </Link>
+            </ul>
+          </div>
+        )}
       </nav>
     </>
   );
 };
 
 export default Navbar;
-
-
-
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (!event.target.closest(".dropdown") && !event.target.closest(".modal")) {
-  //       setIsProfileOpen(false);
-  //       setIsOrgOpen(false);
-  //     }
-  //   };
-  //   document.addEventListener("click", handleClickOutside);
-  //   return () => document.removeEventListener("click", handleClickOutside);
-  // }, []);
-

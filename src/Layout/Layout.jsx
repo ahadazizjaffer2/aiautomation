@@ -5,14 +5,14 @@ import Navbar from '../components/Navbar';
 
 function Layout() {
   return (
-    <div className="flex h-screen">
-    <Sidebar />
-    <div className="flex-1 flex flex-col">
-    <Navbar />
-    <main className="flex-1 p-4">
-    <Outlet />
-    </main>
-    </div>
+    <div className="flex h-screen w-full">
+      <Sidebar />
+      <div className="flex flex-col w-full">
+        <Navbar />
+        <main className="px-2 md:px-4 pl-[50px] md:pl-[60px]">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }

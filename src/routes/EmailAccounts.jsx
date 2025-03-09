@@ -86,7 +86,7 @@ const EmailAccounts = () => {
   };
 
   const AccountsSelectionPage = () => (
-    <div className="p-24 pl-[120px] pt-[40px] bg-white min-h-screen">
+    <div className="p-4 md:p-24 px-auto pt-[20px] md:pt-[40px] bg-white min-h-screen flex justify-center flex-col">
       <div className="flex items-center mb-4">
         <button
           onClick={() => setShowAccountsPage(false)}
@@ -98,9 +98,9 @@ const EmailAccounts = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-3 gap-3 mt-8">
+      <div className="grid md:grid-cols-3 gap-3 mt-8">
         {/* First Card */}
-        <div className="border border-gray-200 rounded-2xl p-4 flex flex-col">
+        <div className="border border-gray-200 rounded-2xl p-4 flex flex-col w-[275px] md:w-auto">
           <div className="flex justify-center mb-4">
             <img src="/src/assets/customer-support.jpeg" alt="Email setup" className="w-70 h-40 object-contain" />
           </div>
@@ -144,7 +144,7 @@ const EmailAccounts = () => {
         </div>
 
         {/* Second Card */}
-        <div className="border border-gray-200 rounded-lg p-6 flex flex-col">
+        <div className="border border-gray-200 rounded-lg p-6 flex flex-col w-[275px] md:w-auto">
           <div className="flex justify-center mb-4">
             <img src="/src/assets/send-message.jpeg" alt="Hassle-free setup" className="w-70 h-40 object-contain" />
           </div>
@@ -192,7 +192,7 @@ const EmailAccounts = () => {
         </div>
 
         {/* Third Card */}
-        <div className="border border-gray-200 rounded-lg p-6 flex flex-col">
+        <div className="border border-gray-200 rounded-lg p-6 flex flex-col w-[275px] md:w-auto">
           <div className="flex justify-center mb-4">
             <img src="/src/assets/businessman-sends-marketing-mails (1).jpeg" alt="Ready accounts" className="w-70 h-40 object-contain" />
           </div>
@@ -236,70 +236,72 @@ const EmailAccounts = () => {
       {showAccountsPage ? (
         <AccountsSelectionPage />
       ) : (
-        <div className="p-6 bg-white min-h-screen pl-[180px] pr-[140px] pt-[35px] text-gray-400">
-          <div className="flex items-center justify-between mb-4">
+        <div className="bg-white overflow-auto min-h-screen pl-[5px] md:px-[140px] pt-[10px] md:pt-[35px] text-gray-400 flex flex-col md:justify-center align-center text-sm">
+          <div className="flex items-center justify-between mb-4 flex-col md:flex-row gap-2 md:mx-5">
             <input
               type="text"
               placeholder="Search..."
-              className="p-2 border border-gray-300 rounded-full w-1/3"
+              className="p-2 border border-gray-300 rounded-full md:w-1/3 w-full"
             />
-            <div className="flex gap-4 items-center">
-              <button className="flex items-center px-4 py-2 border border-gray-300 rounded-full">
+            <div className="flex md:gap-4 gap-1 items-center ">
+              <button className="flex items-center px-3 md:px-4 py-2 border border-gray-300 rounded-full text-sm">
                 All Statuses
               </button>
-              <button className="flex items-center px-4 py-2 border border-gray-300 rounded-full">
+              <button className="flex items-center px-3 py-2 border border-gray-300 rounded-full">
                 Oldest First
               </button>
-              <button className="p-2 px-4 bg-[#15A395] text-white rounded-full"
+              <button className="px-3 py-2 bg-[#15A395] text-white rounded-full"
               onClick={() => setShowAccountsPage(true)}>
                 + Add new
               </button>
             </div>
           </div>
 
-          <div className="grid grid-cols-5 gap-4 my-12 text-gray-400 font-medium pl-[12px] py-4">
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={selectAll}
-                onChange={handleSelectAll}
-                className="w-5 h-5 text-green-500"
-              />
-              Email Address
-            </div>
-            <div>Email Sent</div>
-            <div>Warmup Emails</div>
-            <div>Health Score</div>
-          </div>
-
-          {contacts.map((contact) => (
-            <div
-              key={contact.id}
-              className={`grid grid-cols-5 gap-4 items-center p-4 rounded-lg transition-all ${selected.includes(contact.id) ? "bg-[#c3ffe8]" : "hover:bg-[#e4fff5]"
-                } text-gray-500`}
-            >
-              <div className="flex items-center gap-4">
+          <div className="overflow-auto">
+            <div className="flex md:grid grid-cols-5 gap-2 md:gap-4 my-6 md:my-12 text-gray-400 font-medium pl-[12px] py-4 w-150 md:w-auto">
+              <div className="flex items-center gap-2 w-[200px] md:w-auto">
                 <input
                   type="checkbox"
-                  checked={selected.includes(contact.id)}
-                  onChange={() => toggleSelect(contact.id)}
-                  className="w-5 h-5 text-green-500"
+                  checked={selectAll}
+                  onChange={handleSelectAll}
+                  className="w-4 h-4 md:w-5 md:h-5 text-green-500"
                 />
-                <div
-                  className={`w-10 h-10 flex items-center justify-center rounded-full text-white font-bold ${contact.bgColor}`}
-                >
-                  {contact.initials}
-                </div>
-                <span>{contact.name}</span>
+                Email Address
               </div>
-              <div>{contact.emailsSent}</div>
-              <div>{contact.warmupEmails}</div>
-              <div>{contact.healthScore}</div>
-              <div className="text-gray-600 cursor-pointer flex justify-end">
-                <FaEllipsisH />
-              </div>
+              <div className="w-[100px] md:w-auto">Email Sent</div>
+              <div className="w-[100px] md:w-auto">Warmup Emails</div>
+              <div className="w-[100px] md:w-auto">Health Score</div>
             </div>
-          ))}
+
+            {contacts.map((contact) => (
+              <div
+                key={contact.id}
+                className={`flex jusitfy-between w-150 md:w-auto flex-shrink-0 md:grid grid-cols-5 gap-4 items-center p-4 rounded-lg transition-all ${selected.includes(contact.id) ? "bg-[#c3ffe8]" : "hover:bg-[#e4fff5]"
+                  } text-gray-500`}
+              >
+                <div className="flex items-center md:gap-4 gap-2 w-[200px] md:w-auto">
+                  <input
+                    type="checkbox"
+                    checked={selected.includes(contact.id)}
+                    onChange={() => toggleSelect(contact.id)}
+                    className="w-4 h-4 md:w-5 md:h-5 text-green-500"
+                  />
+                  <div
+                    className={`md:w-10 md:h-10 h-8 w-8 shrink-0 flex items-center justify-center rounded-full text-white font-bold ${contact.bgColor}`}
+                  >
+                    {contact.initials}
+                  </div>
+                  <span>{contact.name}</span>
+                </div>
+                <div className="w-[100px] md:w-auto">{contact.emailsSent}</div>
+                <div className="w-[100px] md:w-auto">{contact.warmupEmails}</div>
+                <div className="w-[100px] md:w-auto">{contact.healthScore}</div>
+                <div className="text-gray-600 w-[30px] md:w-auto cursor-pointer flex justify-end ">
+                  <FaEllipsisH />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </>

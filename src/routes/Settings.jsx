@@ -50,25 +50,25 @@ const Settings = () => {
     };
 
     return (
-        <div className="p-6 bg-gray-50 min-h-screen justify-center pl-[120px]">
+        <div className="p-2 md:p-6 bg-gray-50 min-h-screen justify-center ">
             {/* Navigation Tabs */}
             <div className="w-full max-w-3xl">
                 <div className="mb-8 border-b border-gray-300">
                     <nav className="flex space-x-8">
                         <button
-                            className={`py-4 px-1 border-b-2 font-medium ${activeTab === 'profile' ? 'border-green-500 text-green-500' : 'text-gray-500 border-white'}`}
+                            className={`py-4 text-sm px-1 border-b-2 font-medium ${activeTab === 'profile' ? 'border-green-500 text-green-500' : 'text-gray-500 border-white'}`}
                             onClick={() => setActiveTab('profile')}
                         >
                             Profile
                         </button>
                         <button
-                            className={`py-4 px-1 border-b-2 font-medium ${activeTab === 'workspace' ? 'border-green-500 text-green-500' : 'text-gray-500 border-white'}`}
+                            className={`py-4 text-sm px-1 border-b-2 font-medium ${activeTab === 'workspace' ? 'border-green-500 text-green-500' : 'text-gray-500 border-white'}`}
                             onClick={() => setActiveTab('workspace')}
                         >
                             Workspace & members
                         </button>
                         <button
-                            className={`py-4 px-1 border-b-2 font-medium ${activeTab === 'integrations' ? 'border-green-500 text-green-500' : 'text-gray-500 border-white'}`}
+                            className={`py-4 text-sm px-1 border-b-2 font-medium ${activeTab === 'integrations' ? 'border-green-500 text-green-500' : 'text-gray-500 border-white'}`}
                             onClick={() => setActiveTab('integrations')}
                         >
                             Integrations
@@ -78,7 +78,7 @@ const Settings = () => {
             </div>
 
             {/* Content Based on Active Tab */}
-            <div className="bg-white rounded-2xl shadow p-6">
+            <div className="bg-white rounded-2xl shadow md:p-6 p-3 ">
                 {activeTab === 'profile' ? (
                     // Profile Content (from original Settings.jsx)
                     <>
@@ -260,11 +260,11 @@ const Settings = () => {
                             <h2 className="text-xl font-semibold mb-4">Members</h2>
                             <div className="bg-white rounded-lg shadow">
                                 {/* Member Tabs */}
-                                <div className="border-b border-gray-200 px-6 flex justify-between items-center">
-                                    <div className="flex space-x-6">
+                                <div className="border-b border-gray-200 md:px-6 px-2 text-sm flex justify-between items-center">
+                                    <div className="flex md:space-x-6 gap-2">
                                         <button
                                             onClick={() => setActiveTab('team')}
-                                            className={`py-4 px-1 font-medium relative ${activeTab === 'team'
+                                            className={`md:py-4 md:px-1 font-medium relative ${activeTab === 'team'
                                                 ? 'text-green-500 border-b-2 border-green-500'
                                                 : 'text-gray-500'
                                                 }`}
@@ -285,7 +285,7 @@ const Settings = () => {
                                         <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
                                         </svg>
-                                        Add Member
+                                        <span className='hidden md:block'>Add Member</span>
                                     </button>
                                 </div>
 
@@ -316,7 +316,7 @@ const Settings = () => {
                     </>
                 ) : activeTab === 'integrations' ? (
                     // Placeholder for Integrations (you can expand this later)
-                    <div className="bg-white p-6">
+                    <div className="bg-white md:p-6">
                         <div className="relative mb-6">
                             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
