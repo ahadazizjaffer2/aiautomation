@@ -709,8 +709,8 @@ export default function Crm() {
           )}
           {activeTab === "Opportunities" && (
             <div className="col-span-full w-full overflow-x-auto">
-              <div className="flex justify-between items-center mb-6">
-                <div className="relative flex-1 max-w-md">
+              <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+                <div className="relative flex-1 max-w-md mb-2">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Search className="h-5 w-5 text-gray-400" />
                   </div>
@@ -721,7 +721,7 @@ export default function Crm() {
                   />
                 </div>
 
-              <div className="flex gap-2">
+              <div className="flex flex-col md:flex-row gap-2">
                 <button
                   onClick={() => setIsOpen(!isOpen)}  
                   className="px-4 py-2 border border-gray-300 text-gray-400 rounded-full flex gap-1 items-center"
@@ -755,52 +755,59 @@ export default function Crm() {
               </button>
                 </div>
               </div>
-              <table className="w-full table-fixed">
-                <thead>
-                  <tr className="border-b border-gray-300 text-sm text-muted-foreground">
-                    <th className="whitespace-nowrap px-4 py-3 text-left font-medium w-[40px]">
-                      <input type="checkbox" className="rounded border-muted cursor-pointer" />
-                    </th>
-                    <th className="whitespace-nowrap text-xs px-4 py-3 text-left font-medium text-gray-400">OPPORTUNITY</th>
-                    <th className="whitespace-nowrap text-xs px-4 py-3 text-left font-medium text-gray-400">CONTACT NAME</th>
-                    <th className="whitespace-nowrap text-xs px-4 py-3 text-left font-medium text-gray-400">AMOUNT</th>
-                    <th className="whitespace-nowrap text-xs px-4 py-3 text-left font-medium text-gray-400">OWNER</th>
-                    <th className="whitespace-nowrap text-xs px-4 py-3 text-left font-medium text-gray-400">SOURCE</th>
-                    <th className="whitespace-nowrap text-xs px-4 py-3 text-left font-medium text-gray-400">
-                      EXPECTED CLOSING DATE
-                    </th>
-                    <th className="whitespace-nowrap text-xs px-4 py-3 text-left font-medium text-gray-400">
-                      ACTUAL CLOSING DATE
-                    </th>
-                    <th className="whitespace-nowrap text-xs px-4 py-3 text-left font-medium text-gray-400">
-                      LAST INTERACTION
-                    </th>
-                    <th className="whitespace-nowrap text-xs px-4 py-3 text-left font-medium text-gray-400">STAGE</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {opportunities.map((opp) => (
-                    <tr key={opp.id} className="border-b border-gray-300 text-sm">
-                      <td className="px-4 py-3">
+              <div className="w-full overflow-x-auto">
+                <table className="w-full min-w-[600px] md:min-w-full border-collapse">
+                  <thead>
+                    <tr className="border-b border-gray-300 text-sm text-muted-foreground bg-gray-100">
+                      <th className="px-4 py-3 text-left font-medium w-[40px]">
                         <input type="checkbox" className="rounded border-muted cursor-pointer" />
-                      </td>
-                      <td className="px-4 py-3 text-blue-400 hover:underline cursor-pointer">{opp.opportunity}</td>
-                      <td className="px-4 py-3 text-blue-400 hover:underline cursor-pointer">{opp.contact}</td>
-                      <td className="px-4 py-3 text-gray-400">{opp.amount}</td>
-                      <td className="px-4 py-3">
-                        <div className="inline-flex items-center px-2 py-1 rounded-md bg-blue-50 text-blue-600">
-                          {opp.owner}
-                        </div>
-                      </td>
-                      <td className="px-4 py-3 text-gray-400">{opp.source}</td>
-                      <td className="px-4 py-3 text-gray-400">{opp.expectedClosing}</td>
-                      <td className="px-4 py-3 text-gray-400">{opp.actualClosing}</td>
-                      <td className="px-4 py-3 text-xs text-gray-400">{opp.lastInteraction}</td>
-                      <td className="px-4 py-3 text-gray-400">{opp.stage}</td>
+                      </th>
+                      <th className="whitespace-nowrap px-4 py-3 text-left text-xs font-medium text-gray-500">OPPORTUNITY</th>
+                      <th className="whitespace-nowrap px-4 py-3 text-left text-xs font-medium text-gray-500">CONTACT NAME</th>
+                      <th className="whitespace-nowrap px-4 py-3 text-left text-xs font-medium text-gray-500 hidden md:table-cell">
+                        AMOUNT
+                      </th>
+                      <th className="whitespace-nowrap px-4 py-3 text-left text-xs font-medium text-gray-500">OWNER</th>
+                      <th className="whitespace-nowrap px-4 py-3 text-left text-xs font-medium text-gray-500 hidden md:table-cell">
+                        SOURCE
+                      </th>
+                      <th className="whitespace-nowrap px-4 py-3 text-left text-xs font-medium text-gray-500 hidden lg:table-cell">
+                        EXPECTED CLOSING DATE
+                      </th>
+                      <th className="whitespace-nowrap px-4 py-3 text-left text-xs font-medium text-gray-500 hidden lg:table-cell">
+                        ACTUAL CLOSING DATE
+                      </th>
+                      <th className="whitespace-nowrap px-4 py-3 text-left text-xs font-medium text-gray-500 hidden xl:table-cell">
+                        LAST INTERACTION
+                      </th>
+                      <th className="whitespace-nowrap px-4 py-3 text-left text-xs font-medium text-gray-500">STAGE</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {opportunities.map((opp) => (
+                      <tr key={opp.id} className="border-b border-gray-300 text-sm hover:bg-gray-50">
+                        <td className="px-4 py-3">
+                          <input type="checkbox" className="rounded border-muted cursor-pointer" />
+                        </td>
+                        <td className="px-4 py-3 text-blue-500 hover:underline cursor-pointer">{opp.opportunity}</td>
+                        <td className="px-4 py-3 text-blue-500 hover:underline cursor-pointer">{opp.contact}</td>
+                        <td className="px-4 py-3 text-gray-500 hidden md:table-cell">{opp.amount}</td>
+                        <td className="px-4 py-3">
+                          <div className="inline-flex items-center px-2 py-1 rounded-md bg-blue-50 text-blue-600">
+                            {opp.owner}
+                          </div>
+                        </td>
+                        <td className="px-4 py-3 text-gray-500 hidden md:table-cell">{opp.source}</td>
+                        <td className="px-4 py-3 text-gray-500 hidden lg:table-cell">{opp.expectedClosing}</td>
+                        <td className="px-4 py-3 text-gray-500 hidden lg:table-cell">{opp.actualClosing}</td>
+                        <td className="px-4 py-3 text-xs text-gray-500 hidden xl:table-cell">{opp.lastInteraction}</td>
+                        <td className="px-4 py-3 text-gray-500">{opp.stage}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
               <div className="flex items-center justify-center px-4 py-3">
                 <div className="flex items-center gap-2">
                   <button className="p-2 text-sm text-gray-400 border border-gray-400 rounded hover:text-gray-900 flex items-center gap-1">
