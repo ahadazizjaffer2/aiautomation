@@ -113,7 +113,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Main content */}
-      <main className="max-w-7xl px-3 py-6">
+      <main className="max-w-7xl px-3 py-6 overflow-hidden">
         {/* Filters and actions */}
         <div className="flex flex-col md:flex-row gap-2 justify-between mb-6">
           <div className="relative rounded-md w-64">
@@ -212,12 +212,6 @@ function App() {
               <Plus size={18} className="mr-2" />
               Add new
             </button>
-            {/* <button
-              type="button"
-              className="flex cursor-pointer items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full text-white bg-teal-600 hover:bg-teal-600"
-              
-            >
-            </button> */}
           </div>
         </div>
 
@@ -226,7 +220,7 @@ function App() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-8">
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   <input
                     type="checkbox"
                     className="focus:ring-teal-500 h-4 w-4 text-teal-600 border-gray-300 rounded"
@@ -346,7 +340,7 @@ function App() {
           <div className="fixed inset-0 bg-opacity-25" onClick={() => setShowNewCampaignModal(false)}></div>
           
           {/* Modal */}
-          <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
+          <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full ms-16 me-4 p-6">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-semibold text-gray-900">Let's create a new campaign</h3>
               <button 
