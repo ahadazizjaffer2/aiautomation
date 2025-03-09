@@ -113,9 +113,9 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Main content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <main className="max-w-7xl px-3 py-6">
         {/* Filters and actions */}
-        <div className="flex justify-between mb-6">
+        <div className="flex flex-col md:flex-row gap-2 justify-between mb-6">
           <div className="relative rounded-md w-64">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search size={18} className="text-gray-400" />
@@ -132,7 +132,7 @@ function App() {
           </div>
 
           </div>
-          <div className="flex space-x-4">
+          <div className="flex flex-col w-52 md:w-auto gap-2 md:flex-row space-x-4">
             <div className="relative">
               <button
                 type="button"
@@ -208,19 +208,21 @@ function App() {
                 </div>
               )}
             </div>
-            <button
-              type="button"
-              className="inline-flex cursor-pointer items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full text-white bg-teal-600 hover:bg-teal-600"
-              onClick={() => setShowNewCampaignModal(true)}
-            >
+            <button onClick={() => setShowNewCampaignModal(true)} type="button" class="text-white flex justify-center bg-teal-600 hover:bg-teal-600 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2">
               <Plus size={18} className="mr-2" />
               Add new
             </button>
+            {/* <button
+              type="button"
+              className="flex cursor-pointer items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full text-white bg-teal-600 hover:bg-teal-600"
+              
+            >
+            </button> */}
           </div>
         </div>
 
         {/* Campaigns table */}
-        <div className="bg-white shadow overflow-hidden sm:rounded-md">
+        <div className="bg-white shadow overflow-x-auto sm:rounded-md">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
