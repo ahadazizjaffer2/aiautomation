@@ -832,22 +832,24 @@ export default function Crm() {
           )}
           {activeTab === "Meetings" && (
             <div className="col-span-full w-full overflow-x-auto">
-              <div className="flex justify-between items-center mb-6">
-                <div className="relative flex-1 max-w-md">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Search className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type="text"
-                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
-                    placeholder="Search..."
-                  />
-                </div>
+              <div className="flex flex-col md:flex-row gap-2 justify-between items-center mb-6">
+              <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-full leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
                 <button
                   type="button"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full shadow-sm text-white bg-teal-600 hover:bg-teal-700 "
+                  className="flex items-center px-4 py-2 border border-transparent text-[10px] font-medium rounded-full shadow-sm text-white bg-teal-600 hover:bg-teal-700 "
                 >
-                  <Plus className="mr-2 h-5 w-5" />
+                  <Plus className="h-5 w-5" />
                   New Meeting
                 </button>
               </div>
