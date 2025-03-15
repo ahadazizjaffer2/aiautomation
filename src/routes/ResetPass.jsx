@@ -3,7 +3,7 @@ import React, { useActionState, useState } from 'react';
 import { FaRegEyeSlash } from 'react-icons/fa6';
 import { LuEye } from 'react-icons/lu';
 import { useParams } from 'react-router-dom';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 // import Label from '../components/Label';
 // import { useApi } from '../helper/useApi';
 // import logo from '/logo.png';
@@ -14,12 +14,14 @@ const ResetPass = () => {
     const param = useParams();
     // const token = param["token"]
     const [user, submitAction, isPending] = useActionState(async (previousState, formData) => {
-        const oldPassword = formData.get("oldPassword");
+        // const oldPassword = formData.get("oldPassword");
         const newPassword = formData.get("newPassword");
-        if (!oldPassword || !newPassword) {
+        console.log(newPassword);
+        
+        if (!newPassword) {
             // return toast.error("Password is required")
         }
-        if (newPassword !== newPassword) {
+        if (newPassword) {
             // return toast.error("Password donot match");
         }
 
@@ -56,8 +58,8 @@ const ResetPass = () => {
                         <div className="">
                             <form action={submitAction}>
                                 <div className="grid gap-y-4">
-                                    <div>
-                                        <label labelName="Old password" htmlFor="new_password" />
+                                    {/* <div>
+                                        <label  htmlFor="new_password" />
                                         <div className="relative flex items-center mt-2">
                                             <span onClick={handlePass} className="absolute right-1">
                                                 {passIcon === "password" ? <FaRegEyeSlash className="w-5 h-5 mx-3 cursor-pointer font-bold text-gray-400 dark:text-gray-500" /> : <LuEye className="w-5 h-5 mx-3 cursor-pointer text-gray-400 dark:text-gray-500" />}
@@ -75,9 +77,9 @@ const ResetPass = () => {
                                         <p className="hidden mt-2 text-xs text-red-600" id="new-password-error">
                                             Please include a password that complies with the rules to ensure security
                                         </p>
-                                    </div>
+                                    </div> */}
                                     <div>
-                                        <label labelName="New password" htmlFor="confirm_new_password" />
+                                        <label htmlFor="confirm_new_password" />
                                         <div className="relative flex items-center mt-2">
                                             <span onClick={handlePass} className="absolute right-1">
                                                 {passIcon === "password" ? <FaRegEyeSlash className="w-5 h-5 mx-3 cursor-pointer font-bold text-gray-400 dark:text-gray-500" /> : <LuEye className="w-5 h-5 mx-3 cursor-pointer text-gray-400 dark:text-gray-500" />}

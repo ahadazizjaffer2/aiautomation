@@ -1,7 +1,7 @@
 import { CircleDot } from 'lucide-react';
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 // import Label from '../components/Label';
 // import { useApi } from '../helper/useApi.js';
 // import logo from '/logo.png';
@@ -12,6 +12,8 @@ function Forgotpass() {
     const haldleForgotPass = async () => {
         try {
             setIspending(true);
+            console.log(email);
+            
             // const response = await useApi("post", "/auth/forgot-password", { email });
             console.log(response.data);
             setEmail(" ");
@@ -40,7 +42,7 @@ function Forgotpass() {
                         <div>
                             <div className="grid gap-y-2">
                                 <div>
-                                    <label labelName="Email address" htmlFor="email" />
+                                    <label htmlFor="email" />
                                     <div className="relative">
                                         <input
                                             onChange={(e) => setEmail(e.target.value)}

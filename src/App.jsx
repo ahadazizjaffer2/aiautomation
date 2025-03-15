@@ -20,6 +20,7 @@ import Support from './routes/Support';
 import CompaignTarget from './routes/CompaignTarget';
 import Forgotpass from './routes/ForgotPass';
 import ResetPass from './routes/ResetPass';
+import Otp from './routes/Otp';
 
 function App() {
   const router = createBrowserRouter(
@@ -29,6 +30,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot" element={<Forgotpass />} />
         <Route path='/reset' element={ <ResetPass /> } />
+        <Route path='/otp' element={ <Otp /> } />
 
         <Route path="/" element={<Layout />}>
           <Route index element={<DashboardPage />} />

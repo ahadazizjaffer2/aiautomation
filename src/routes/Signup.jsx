@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 const SignUp = () => {
   const [formData, setFormData] = useState({
     firstName: '',
+    lastName: '',
     email: '',
+    phone:'',
     password: '',
     agreeToTerms: false
   });
@@ -51,16 +53,31 @@ const SignUp = () => {
           <h1 className="text-2xl font-semibold text-gray-900 mb-8">Create a new account</h1>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <input
-                type="text"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-                placeholder="First Name"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
-                required
-              />
+            <div className='flex gap-2'>
+            
+              <div>
+                <input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  placeholder="First Name"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
+                  required
+                />
+              </div>
+
+              <div>
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  placeholder="Last Name"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
+                  required
+                />
+              </div>
             </div>
 
             <div>
@@ -70,6 +87,18 @@ const SignUp = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Email"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
+                required
+              />
+            </div>
+
+            <div>
+              <input
+                type="text"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Contact Number"
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
                 required
               />
