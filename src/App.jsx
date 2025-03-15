@@ -18,6 +18,8 @@ import Campaigns from './routes/Campaigns';
 import Settings from './routes/Settings';
 import Support from './routes/Support';
 import CompaignTarget from './routes/CompaignTarget';
+import Forgotpass from './routes/ForgotPass';
+import ResetPass from './routes/ResetPass';
 
 function App() {
   const router = createBrowserRouter(
@@ -25,6 +27,9 @@ function App() {
       <>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot" element={<Forgotpass />} />
+        <Route path='/reset' element={ <ResetPass /> } />
+
         <Route path="/" element={<Layout />}>
           <Route index element={<DashboardPage />} />
           <Route path='/crm' element={ <Crm /> } />
