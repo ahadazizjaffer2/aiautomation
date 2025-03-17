@@ -4,31 +4,23 @@ import { FaRegEyeSlash } from 'react-icons/fa6';
 import { LuEye } from 'react-icons/lu';
 import { useParams } from 'react-router-dom';
 import { useAuthQuery } from '../reactQuery/hooks/useAuthQuery';
-// import logo from '/logo.png';
 
 const ResetPass = () => {
-    const { token } = useParams();
-    const [passIcon, setPassIcon] = useState("password");
-    const param = useParams();
+    // const { token } = useParams();
+    // const param = useParams();
     // const token = param["token"]
+    const [passIcon, setPassIcon] = useState("password");
      const { resetPasswordMutation } = useAuthQuery();
     const [user, submitAction, isPending] = useActionState(async (previousState, formData) => {
         const newPassword = formData.get("newPassword");
-        console.log(newPassword);
-
-        
-        // if (!newPassword) {
-        //     // return toast.error("Password is required")
-        // }
+        if (!newPassword) {
+            return toast.error("Password is required")
+        }
+        console.log({NewPassword: newPassword});
         if (newPassword) {
             resetPasswordMutation.mutate(newPassword);
         }
-
-        // try {
-        //     // await useApi("post", `/auth/change-password/${token}`, { oldPassword, newPassword });
-        // } catch (error) {
-        //     // toast.error(error.response?.data.message);
-        // }
+       
     })
 
     const handlePass = () => {
