@@ -18,7 +18,7 @@ const ResetPass = () => {
         }
         console.log({NewPassword: newPassword});
         if (newPassword) {
-            resetPasswordMutation.mutate(newPassword);
+            resetPasswordMutation.mutate({NewPassword: newPassword});
         }
        
     })

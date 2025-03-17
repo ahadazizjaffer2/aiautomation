@@ -5,7 +5,7 @@ export const loginUser = (userData) => axiosInstance.post("/user/Login", userDat
 export const logoutUser = () => axiosInstance.post("/user/logout").then(res => res.data);
 export const verifyOtp = (otp) => axiosInstance.post("/user/2FA", { otp }).then(res => res.data);
 export const forgotPassword = (userData) => axiosInstance.put("/user/ForgetPassword", userData).then(res => res.data);
-export const resetPassword = (userData) => axiosInstance.post("/user/ResetPassword", userData).then(res => res.data);
+export const resetPassword = (userData) => axiosInstance.put("/user/ResetPassword", userData).then(res => res.data);
 export const getUserInfo = () => axiosInstance.get("/user/GetUserDetails").then(res => res.data);
 export const updatePassword = (userData) => axiosInstance.put("/user/UpdatePassword", userData).then(res => res.data);
 export const updateProfile = (userData) => axiosInstance.put("/user/UpdateUserDetails", userData).then(res => res.data);
