@@ -10,6 +10,7 @@ function Forgotpass() {
     const haldleForgotPass = async () => {
         console.log({Email: email});
         forgotPasswordMutation.mutate({Email: email});
+        setEmail('');
     }
     return (
         <div className='flex justify-center items-center min-h-screen'>
