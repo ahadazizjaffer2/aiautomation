@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { CircleDot } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthQuery } from '../reactQuery/hooks/useAuthQuery';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [Email, setEmail] = useState('');
+  const [Password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { signinMutation } = useAuthQuery(navigate);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Login attempt with:', { email, password });
+    const payload = { Email, Password};
+    console.log(payload, "payload");
+    signinMutation.mutate(payload);
   };
 
   return (  
@@ -32,7 +37,7 @@ const Login = () => {
             <div>
               <input
                 type="email"
-                value={email}
+                value={Email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
@@ -43,7 +48,7 @@ const Login = () => {
             <div>
               <input
                 type="password"
-                value={password}
+                value={Password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"

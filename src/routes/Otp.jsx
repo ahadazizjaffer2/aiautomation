@@ -1,30 +1,28 @@
 import { CircleDot } from 'lucide-react';
 import React, { useActionState, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-// import logo from '/logo.png';
-// import { useApi } from '../helper/useApi';
+import { useAuthQuery } from '../reactQuery/hooks/useAuthQuery';
+
 
 export const getData = (data) => {
-  console.log(data);
+  // console.log(data);
   return data;
 };
- 
+
 const Otp = () => {
   const navigate = useNavigate()
+  const { verifyOtpMutation } = useAuthQuery(navigate);
   // let token = JSON.parse(localStorage.getItem("token"));
   const [otpNum, setOtpNum] = useState(["", "", "", "", "", ""]);
   const[disable, setDisable] = useState(false);
 
   const [user, submitAction, isPending] = useActionState(async (previousState, formData) => {
     const otp = otpNum.join('');
-    const data = otp;
-    console.log(otp);
-    
-    // const data = await useApi("post", "auth/verify-email", {otp});
+    const payload = {UserCode: otp};
+    console.log(payload);
+    // verifyOtpMutation.mutate(payload);
     if(data){
       setOtpNum(["", "", "", "", "", ""]);
-      navigate("/");
     }
   });
 
@@ -41,26 +39,9 @@ const Otp = () => {
     index == 5 && setDisable(true)
 };
 
-const handleNewOtp = async () => {
-  try {
-    // console.log(response?.data?.data?.email);
-    
-    // console.log(getData({ email: response?.data?.data?.email, _id: response?.data?.data?._id }));
-    
-    const result = getData({ email: response?.data?.data?.email, _id: response?.data?.data?._id });    
-    console.log(result, "data");
-    
-    const { email, _id } = result;
-    const payload = {email, _id};
-    // const data = await useApi("post", "/auth/resend-otp", payload);
-  } catch (error) {
-    // toast.error(error.response?.data.message)
-  }
-}
 
 const handleKeyDown = (e, index) => {
     if (e.key === "Backspace" && otpNum[index] === "") {
-        // Move focus to the previous input when backspace is pressed and the current input is empty
         if (index > 0) {
             document.getElementById(`otp-input-${index - 1}`).focus();
         }
@@ -112,10 +93,7 @@ const handleKeyDown = (e, index) => {
           </button>
         </div>
       </form>
-      {/* <div className="text-sm text-slate-500 mt-4">
-        Didn't receive code?{' '}
-        <button onClick={handleNewOtp} className="font-medium text-indigo-500 hover:text-indigo-600"> Resend </button>
-      </div> */}
+      
     </div>
     </div>
   );

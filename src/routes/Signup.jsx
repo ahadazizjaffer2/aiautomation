@@ -1,17 +1,20 @@
 import  { useState } from 'react';
 import { CircleDot } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthQuery } from '../reactQuery/hooks/useAuthQuery';
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone:'',
-    password: '',
+    FirstName: '',
+    LastName: '',
+    Email: '',
+    PhoneNumber:'',
+    Password: '',
     agreeToTerms: false
   });
   const [passwordError, setPasswordError] = useState('');
+  const { signupMutation } = useAuthQuery(navigate);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -20,19 +23,19 @@ const SignUp = () => {
       [name]: type === 'checkbox' ? checked : value
     }));
 
-    if (name === 'password') {
+    if (name === 'Password') {
       setPasswordError(value.length < 6 ? 'Password must be at least 6 characters' : '');
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.password.length < 6) {
+    if (formData.Password.length < 6) {
       setPasswordError('Password must be at least 6 characters');
       return;
     }
     // Handle sign-up logic
-    console.log('Sign-up attempt with:', formData);
+    signupMutation.mutate(formData);
   };
 
   return (
@@ -58,8 +61,8 @@ const SignUp = () => {
               <div>
                 <input
                   type="text"
-                  name="firstName"
-                  value={formData.firstName}
+                  name="FirstName"
+                  value={formData.FirstName}
                   onChange={handleChange}
                   placeholder="First Name"
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
@@ -70,8 +73,8 @@ const SignUp = () => {
               <div>
                 <input
                   type="text"
-                  name="lastName"
-                  value={formData.lastName}
+                  name="LastName"
+                  value={formData.LastName}
                   onChange={handleChange}
                   placeholder="Last Name"
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
@@ -83,8 +86,8 @@ const SignUp = () => {
             <div>
               <input
                 type="email"
-                name="email"
-                value={formData.email}
+                name="Email"
+                value={formData.Email}
                 onChange={handleChange}
                 placeholder="Email"
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
@@ -95,8 +98,8 @@ const SignUp = () => {
             <div>
               <input
                 type="text"
-                name="phone"
-                value={formData.phone}
+                name="PhoneNumber"
+                value={formData.PhoneNumber}
                 onChange={handleChange}
                 placeholder="Contact Number"
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
@@ -107,8 +110,8 @@ const SignUp = () => {
             <div>
               <input
                 type="password"
-                name="password"
-                value={formData.password}
+                name="Password"
+                value={formData.Password}
                 onChange={handleChange}
                 placeholder="Password"
                 className={`w-full px-4 py-3 rounded-lg border ${

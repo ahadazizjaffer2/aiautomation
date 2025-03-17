@@ -1,7 +1,7 @@
 import { CircleDot } from 'lucide-react';
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 // import Label from '../components/Label';
 // import { useApi } from '../helper/useApi.js';
 // import logo from '/logo.png';

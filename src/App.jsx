@@ -21,13 +21,14 @@ import CompaignTarget from './routes/CompaignTarget';
 import Forgotpass from './routes/ForgotPass';
 import ResetPass from './routes/ResetPass';
 import Otp from './routes/Otp';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/forgot" element={<Forgotpass />} />
         <Route path='/reset' element={ <ResetPass /> } />
         <Route path='/otp' element={ <Otp /> } />
@@ -51,7 +52,12 @@ function App() {
     )
   );
 
-  return <RouterProvider router={router} />;
+  return (
+    <div>
+      <RouterProvider router={router} />
+      <Toaster position="top-center" />
+    </div>
+  )
 }
 
 export default App;
