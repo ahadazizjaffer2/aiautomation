@@ -1,26 +1,15 @@
 import { CircleDot } from 'lucide-react';
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-// import { toast } from 'react-toastify';
-// import Label from '../components/Label';
-// import { useApi } from '../helper/useApi.js';
-// import logo from '/logo.png';
+import { useAuthQuery } from '../reactQuery/hooks/useAuthQuery';
 
 function Forgotpass() {
+    const { forgotPasswordMutation } = useAuthQuery();
     const [email, setEmail] = useState('');
     const [isPending, setIspending] = useState(false);
     const haldleForgotPass = async () => {
-        try {
-            setIspending(true);
-            console.log(email);
-            
-            // const response = await useApi("post", "/auth/forgot-password", { email });
-            console.log(response.data);
-            setEmail(" ");
-        } catch (error) {
-            // toast.error(error.response?.data.message);
-        }
-        setIspending(false);
+        console.log({Email: email});
+        forgotPasswordMutation.mutate({Email: email});
     }
     return (
         <div className='flex justify-center items-center min-h-screen'>
@@ -63,7 +52,7 @@ function Forgotpass() {
                                     type="submit"
                                     className="inline-flex items-center justify-center cursor-pointer gap-2 px-4 py-3 text-[15px] font-bold text-white transition-all bg-teal-500 hover:bg-teal-400 border border-transparent rounded-md outline-none ">
                                     Reset Password
-                                    {isPending && <div className="w-7 h-7 border-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"></div>}
+                                    {/* {isPending && <div className="w-7 h-7 border-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"></div>} */}
                                 </button>
                                 <button
                                     className="inline-flex items-center cursor-pointer border-gray-200 justify-center gap-2 px-4 py-3 text-sm font-bold text-gray-700 transition-all border-2 bg-gray-200 hover:bg-gray-50 rounded-md">

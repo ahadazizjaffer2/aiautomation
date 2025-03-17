@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Bell, ChevronDown, User, HelpCircle, Settings, LogOut, Plus, X, Briefcase, Menu } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { QueryClient } from '@tanstack/react-query';
 
 const Navbar = () => {
   const [workspaceName, setWorkspaceName] = useState('');
@@ -72,7 +73,9 @@ const Navbar = () => {
     : notifications.filter(notification => notification.type === selectedFilter);
 
   const handleLogout = () => {
+    localStorage.removeItem("user");
     navigate('/login');
+    QueryClient.removeQueries(["userInfo"]);
   };
 
   // Function to close all dropdowns
@@ -235,7 +238,7 @@ const Navbar = () => {
                     </a>
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left flex items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                      className="w-full text-left flex cursor-pointer items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
                     >
                       <LogOut className="w-4 h-4 mr-2" />
                       Logout

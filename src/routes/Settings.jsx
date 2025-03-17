@@ -1,15 +1,69 @@
-// routes/Settings.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAuthQuery } from '../reactQuery/hooks/useAuthQuery';
+import { Lock, Mail, Phone, User } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const Settings = () => {
-    const [profileData, setProfileData] = useState({
-        firstName: 'Beetos',
-        lastName: 'Lenu',
-        email: 'ceo@quickiepe.ai',
-        phone: '+12304560713',
-        password: '••••••••••••••••',
-        twoFactorEnabled: true,
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const { updatePasswordMutation, updateProfileMutation } = useAuthQuery();
+    const [passwords, setPasswords] = useState({
+        OldPassword: "",
+        NewPassword: "",
+        RetypePassword: "",
     });
+    const handlePasswordChange = (e) => {
+        setPasswords({ ...passwords, [e.target.name]: e.target.value });
+    };
+    const handleUpdatePassword = () => {
+        if (passwords.NewPassword !== passwords.RetypePassword) {
+            alert("New password and Retype password do not match!");
+            return;
+        }
+        updatePasswordMutation.mutate(passwords);
+        console.log("Password updated successfully!", passwords);
+        setIsModalOpen(false);
+    };
+
+    
+    const { userInfo } = useAuthQuery();
+    // console.log(userInfo?.User);
+    const [profileData, setProfileData] = useState({
+        FirstName: '',
+        LastName: '',
+        Email: '',
+        PhoneNumber: '',
+        password: '',
+        TFA: false,
+    });
+
+    
+    useEffect(() => {
+        if (userInfo?.User) {
+            setProfileData({
+                FirstName: userInfo.User.FirstName || "",
+                LastName: userInfo.User.LastName || "",
+                Email: userInfo.User.Email || "",
+                PhoneNumber: userInfo.User.PhoneNumber || "",
+                password: userInfo.User.Password || "",
+                TFA: false,
+            });
+        }
+    }, [userInfo]);
+    
+    const updateProfile = () => {
+        const { password, ...profileDetail } = profileData;
+        const phoneRegex = /^\+92[0-9]{10}$/;
+        if (!phoneRegex.test(profileDetail.PhoneNumber)) {
+            toast.error("Invalid phone number format!");
+            return;
+        }
+        console.log(profileDetail);
+        updateProfileMutation.mutate(profileDetail);
+    }
+
+
+    // *****************************
+    
 
     const [workspaceData, setWorkspaceData] = useState({
         name: 'My Organization',
@@ -41,7 +95,7 @@ const Settings = () => {
     const handleToggle = () => {
         setProfileData((prev) => ({
             ...prev,
-            twoFactorEnabled: !prev.twoFactorEnabled,
+            TFA: !prev.TFA,
         }));
     };
 
@@ -57,20 +111,17 @@ const Settings = () => {
                     <nav className="flex space-x-8">
                         <button
                             className={`py-4 text-sm px-1 border-b-2 font-medium ${activeTab === 'profile' ? 'border-green-500 text-green-500' : 'text-gray-500 border-white'}`}
-                            onClick={() => setActiveTab('profile')}
-                        >
+                            onClick={() => setActiveTab('profile')}>
                             Profile
                         </button>
                         <button
                             className={`py-4 text-sm px-1 border-b-2 font-medium ${activeTab === 'workspace' ? 'border-green-500 text-green-500' : 'text-gray-500 border-white'}`}
-                            onClick={() => setActiveTab('workspace')}
-                        >
+                            onClick={() => setActiveTab('workspace')}>
                             Workspace & members
                         </button>
                         <button
                             className={`py-4 text-sm px-1 border-b-2 font-medium ${activeTab === 'integrations' ? 'border-green-500 text-green-500' : 'text-gray-500 border-white'}`}
-                            onClick={() => setActiveTab('integrations')}
-                        >
+                            onClick={() => setActiveTab('integrations')}>
                             Integrations
                         </button>
                     </nav>
@@ -80,7 +131,6 @@ const Settings = () => {
             {/* Content Based on Active Tab */}
             <div className="bg-white rounded-2xl shadow md:p-6 p-3 ">
                 {activeTab === 'profile' ? (
-                    // Profile Content (from original Settings.jsx)
                     <>
                         {/* Profile Picture */}
                         <div className="flex items-center mb-8">
@@ -94,34 +144,29 @@ const Settings = () => {
 
                         {/* Form Fields */}
                         <div className="space-y-6">
-                            {/* Name Fields */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
-                                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                        </svg>
+                                    <label className="text-sm font-medium text-gray-700 mb-1 flex items-center">
+                                        <User className='text-gray-400' />
                                         First name
                                     </label>
                                     <input
                                         type="text"
-                                        name="firstName"
-                                        value={profileData.firstName}
+                                        name="FirstName"
+                                        value={profileData.FirstName}
                                         onChange={handleProfileChange}
                                         className="w-full p-2 border border-gray-200 rounded-md"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
-                                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                        </svg>
+                                    <label className="text-sm font-medium text-gray-700 mb-1 flex items-center">
+                                    <User className='text-gray-400' />
                                         Last name
                                     </label>
                                     <input
                                         type="text"
-                                        name="lastName"
-                                        value={profileData.lastName}
+                                        name="LastName"
+                                        value={profileData.LastName}
                                         onChange={handleProfileChange}
                                         className="w-full p-2 border border-gray-200 rounded-md"
                                     />
@@ -130,16 +175,14 @@ const Settings = () => {
 
                             {/* Email */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
-                                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                    </svg>
+                                <label className="text-sm font-medium text-gray-700 mb-1 flex gap-1 items-center">
+                                    <Mail size={19} className='text-gray-400' />
                                     Email address
                                 </label>
                                 <input
-                                    type="email"
-                                    name="email"
-                                    value={profileData.email}
+                                    type="Email"
+                                    name="Email"
+                                    value={profileData.Email}
                                     onChange={handleProfileChange}
                                     className="w-full p-2 border border-gray-200 rounded-md"
                                 />
@@ -147,16 +190,14 @@ const Settings = () => {
 
                             {/* Phone */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
-                                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                                    </svg>
+                                <label className="text-sm font-medium text-gray-700 mb-1 flex gap-1 items-center">
+                                    <Phone size={19} className='text-gray-400' />
                                     Phone number
                                 </label>
                                 <input
                                     type="tel"
-                                    name="phone"
-                                    value={profileData.phone}
+                                    name="PhoneNumber"
+                                    value={profileData.PhoneNumber}
                                     onChange={handleProfileChange}
                                     className="w-full p-2 border border-gray-200 rounded-md"
                                 />
@@ -165,15 +206,69 @@ const Settings = () => {
                             {/* Password */}
                             <div>
                                 <div className="flex justify-between items-center mb-1">
-                                    <label className="block text-sm font-medium text-gray-700 flex items-center">
-                                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                                        </svg>
+                                    <label className="text-sm font-medium text-gray-700 flex gap-1 items-center">
+                                        <Lock size={19} className='text-gray-400' />
                                         Password
                                     </label>
-                                    <button className="text-sm text-teal-500 hover:text-teal-600">
-                                        Update password
-                                    </button>
+                                    <div>
+                            {/* Update Password Button */}
+                            <button onClick={() => setIsModalOpen(true)} className="text-sm cursor-pointer text-teal-500 hover:text-teal-600">
+                                Update password
+                            </button>
+
+                            {isModalOpen && (
+                                <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-[#8684848c] bg-opacity-50">
+                                    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-lg font-semibold">Update Password</h3>
+                                            <button onClick={() => setIsModalOpen(false)} className="text-gray-500 hover:text-gray-700 cursor-pointer bg-gray-200 px-1.5 rounded-full">✕</button>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            <div>
+                                                <label className="block text-sm font-medium">Old Password</label>
+                                                <input
+                                                    type="password"
+                                                    name="OldPassword"
+                                                    value={passwords.OldPassword}
+                                                    onChange={handlePasswordChange}
+                                                    className="w-full p-2 border border-gray-300 outline-none rounded-md"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium">New Password</label>
+                                                <input
+                                                    type="password"
+                                                    name="NewPassword"
+                                                    value={passwords.NewPassword}
+                                                    onChange={handlePasswordChange}
+                                                    className="w-full p-2 border border-gray-300 outline-none rounded-md"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium">Retype Password</label>
+                                                <input
+                                                    type="password"
+                                                    name="RetypePassword"
+                                                    value={passwords.RetypePassword}
+                                                    onChange={handlePasswordChange}
+                                                    className="w-full p-2 border border-gray-300 outline-none rounded-md"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="flex justify-end mt-4 gap-3">
+                                            <button onClick={() => setIsModalOpen(false)} className="text-black cursor-pointer border border-gray-300 rounded-full px-4 py-1">
+                                                Cancel
+                                            </button>
+                                            <button onClick={handleUpdatePassword} className="bg-teal-500 cursor-pointer text-white px-4 py-2 rounded-full text-[14px]">
+                                                Update Password
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                )}
+                                </div>
                                 </div>
                                 <input
                                     type="password"
@@ -185,22 +280,21 @@ const Settings = () => {
                             </div>
 
                             {/* 2FA Toggle */}
-                            <div className="flex justify-between items-center py-2">
-                                <div className="flex items-center">
-                                    <svg className="w-4 h-4 mr-2 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                                    </svg>
+                            <div className="flex justify-between items-center py-2 mb-5">
+                                <div className="flex gap-1 items-center">
+                                    <Lock size={18} className='text-gray-400' />
                                     <span className="text-sm font-medium text-gray-700">Enable 2FA</span>
                                 </div>
                                 <button
                                     onClick={handleToggle}
-                                    className={`relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none ${profileData.twoFactorEnabled ? 'bg-green-500' : 'bg-gray-200'}`}
+                                    className={`relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none ${profileData.TFA ? 'bg-green-500' : 'bg-gray-200'}`}
                                 >
                                     <span
-                                        className={`inline-block w-4 h-4 transform transition-transform bg-white rounded-full ${profileData.twoFactorEnabled ? 'translate-x-6' : 'translate-x-1'}`}
+                                        className={`inline-block w-4 h-4 transform transition-transform bg-white rounded-full ${profileData.TFA ? 'translate-x-6' : 'translate-x-1'}`}
                                     />
                                 </button>
                             </div>
+                        <button onClick={updateProfile} className='border-none text-sm absolute cursor-pointer right-7 bottom-0.5 border-gray-400 rounded-full p-2 bg-teal-400'>Update Profile</button>
                         </div>
                     </>
                 ) : activeTab === 'workspace' ? (
@@ -212,7 +306,7 @@ const Settings = () => {
                             <div className="">
                                 {/* Workspace Name */}
                                 <div className="mb-6">
-                                    <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                    <label className="text-sm font-medium text-gray-700 mb-2 flex items-center">
                                         <svg className="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                                         </svg>
@@ -229,7 +323,7 @@ const Settings = () => {
 
                                 {/* Workspace ID */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                    <label className="text-sm font-medium text-gray-700 mb-2 flex items-center">
                                         <svg className="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                         </svg>
