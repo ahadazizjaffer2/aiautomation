@@ -106,18 +106,17 @@ export default function DashboardPage() {
               <div className="mb-4 flex items-center justify-between">
                 <h3 className="font-semibold">Stats</h3>
                 <Link to='/analytics'>
-                  <MoveUpRight />
+                  <MoveUpRight className="text-gray-400"/>
                 </Link>
                 </div>
-                <div className="flex justify-center gap-2">
+                {/* <div className="flex justify-center gap-2">
                   <button
                     className={`px-2 md:px-4 py-1 md:py-2 rounded-full text-sm ${
                       selectedView === "month"
                         ? "bg-gray-500 text-white"
                         : "bg-gray-200 text-gray-400"
                     }`}
-                    onClick={() => setSelectedView("month")}
-                  >
+                    onClick={() => setSelectedView("month")}>
                     Month view
                   </button>
                   <button
@@ -130,6 +129,24 @@ export default function DashboardPage() {
                   >
                     Week view
                   </button>
+              </div> */}
+              <div className="w-fit mx-auto rounded-full bg-gray-200 p-1">
+                <button
+                  className={`px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm rounded-full cursor-pointer transition-all duration-300 ${
+                    selectedView === "month" ? "bg-gray-500 text-white" : "bg-gray-200 text-gray-400"
+                  }`}
+                  onClick={() => setSelectedView("month")}
+                >
+                  Monthly
+                </button>
+                <button
+                  className={`px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm rounded-full cursor-pointer transition-all duration-300 ${
+                    selectedView === "week" ? "bg-gray-500 text-white" : "bg-gray-200 text-gray-400"
+                  }`}
+                  onClick={() => setSelectedView("week")}
+                >
+                  Weekly
+                </button>
               </div>
               <StatsChart />
             </div>

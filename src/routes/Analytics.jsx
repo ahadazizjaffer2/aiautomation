@@ -95,17 +95,17 @@ function Analytics() {
             <div className="p-0 md:p-6 rounded-lg">
                 <div className="h-[300px] md:h-[400px] w-full">
                     <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={data} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
+                        <BarChart data={data} margin={{ top: 30, right: 20, left: 0, bottom: 5 }}>
                             <CartesianGrid stroke="#E5E7EB" strokeDasharray="0" />
                             <XAxis dataKey="name" stroke="#4A5568" tick={{ fontSize: 12 }} />
                             <YAxis stroke="#4A5568" tick={{ fontSize: 12 }} />
                             <Tooltip contentStyle={{ backgroundColor: "#fff", borderRadius: "5px", padding: "10px" }} />
                             <Legend />
-                            <Bar dataKey="conversions" stackId="a" fill="#6B21A8" barSize={40} />
-                            <Bar dataKey="opportunities" stackId="a" fill="#EC4899" barSize={40} />
-                            <Bar dataKey="clicks" stackId="a" fill="#F59E0B" barSize={40} />
-                            <Bar dataKey="opens" stackId="a" fill="#10B981" barSize={40} />
-                            <Bar dataKey="sent" stackId="a" fill="#1E40AF" barSize={40} />
+                            <Bar dataKey="conversions" stackId="a" fill="#6c6cf0" barSize={40} />
+                            <Bar dataKey="opportunities" stackId="a" fill="#a16ff2" barSize={40} />
+                            <Bar dataKey="clicks" stackId="a" fill="#e271db" barSize={40} />
+                            <Bar dataKey="opens" stackId="a" fill="#f19888" barSize={40} />
+                            <Bar dataKey="sent" stackId="a" fill="#ffc195" barSize={40} />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>

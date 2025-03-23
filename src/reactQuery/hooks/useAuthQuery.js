@@ -78,7 +78,10 @@ export const useAuthQuery = (navigate) => {
 
   const updatePasswordMutation = useMutation({
     mutationFn: updatePassword, // ✅ Fix
-    onSuccess: (data) => toast.success(data.message),
+    onSuccess: (data) => {
+      toast.success(data.message);
+      queryClient.invalidateQueries(["userInfo"]);
+    },
     onError: (error) => toast.error(error.response?.data?.message || "Update password failed"),
   });
 

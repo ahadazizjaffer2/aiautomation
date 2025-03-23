@@ -38,6 +38,7 @@ function LiveFeed() {
   return (
     <div className="space-y-4">
       {feedItems.map((item, i) => (
+        <>
         <div key={i} className="flex items-start gap-3">
           <img src={item.avatar || "/placeholder.svg"} alt={item.name} className="h-8 w-8 rounded-full" />
           <div className="flex-1 space-y-1">
@@ -55,6 +56,8 @@ function LiveFeed() {
             </div>
           </div>
         </div>
+        <hr className="text-gray-300" />
+        </>
       ))}
     </div>
   )

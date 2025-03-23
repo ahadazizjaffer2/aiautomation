@@ -3,26 +3,9 @@ import { Bell, ChevronDown, User, HelpCircle, Settings, LogOut, Plus, X, Briefca
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { QueryClient } from '@tanstack/react-query';
+import { useWorkspaceQuery } from '../reactQuery/hooks/useWorkspaceQuery';
 
 const Navbar = () => {
-  const [workspaceName, setWorkspaceName] = useState('');
-  const [workspaceID, setWorkspaceID] = useState(uuidv4());
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isOrgOpen, setIsOrgOpen] = useState(false);
-  const navigate = useNavigate();
-  const [selectedFilter, setSelectedFilter] = useState('All');
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // For toggling the menu on mobile
-
-  const handleCreateWorkspace = () => {
-    console.log("New Workspace Created:", workspaceName, workspaceID);
-    setIsModalOpen(false);
-    setWorkspaceName('');
-    setWorkspaceID(uuidv4());
-  };
-
   const notifications = [
     {
       name: "Benjiman Cooper",
@@ -65,6 +48,42 @@ const Navbar = () => {
       bg: "bg-[#e6ff33]",
     }
   ];
+  const [workspaceName, setWorkspaceName] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isOrgOpen, setIsOrgOpen] = useState(false);
+  const navigate = useNavigate();
+  const [selectedFilter, setSelectedFilter] = useState('All');
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // For toggling the menu on mobile
+  
+  const { createWorkspaceMutation, allWorkspace, switchWorkspaceMutation } = useWorkspaceQuery()
+  const[selectedId, setSelectedId] = useState(null);
+  const handleCreateWorkspace = () => {
+    createWorkspaceMutation.mutate({WorkspaceName: workspaceName});
+    setIsModalOpen(false);
+    setWorkspaceName('');
+  };
+
+  // console.log(allWorkspace);
+  useEffect(() => {
+    const id = JSON.parse(localStorage.getItem("user"))
+    setSelectedId(id?.data?.CurrentWorkspaceId)
+    // console.log(id?.data?.CurrentWorkspaceId);
+  }, [])
+  
+  const handleSwitchWorkspace = (id) => {
+    console.log({WorkspaceId: id});
+    setSelectedId(id);
+    switchWorkspaceMutation.mutate({WorkspaceId: id});
+    const storedData = JSON.parse(localStorage.getItem("user")) || {};
+    storedData.data.CurrentWorkspaceId = id;
+    localStorage.setItem("user", JSON.stringify(storedData));
+  }
+  
+
+
 
   const location = useLocation();
 
@@ -75,7 +94,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     navigate('/login');
-    QueryClient.removeQueries(["userInfo"]);
+    QueryClient?.removeQueries(["userInfo"]);
   };
 
   // Function to close all dropdowns
@@ -223,25 +242,32 @@ const Navbar = () => {
                 </button>
 
                 {isProfileOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 border-none">
-                    <a href="#" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg p-1 z-10 border-none">
+                    {/* <a className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                       <User className="w-4 h-4 mr-2" />
-                      Profile
+                      <Link to='/settings'>
+                        Profile
+                      </Link>
+                    </a> */}
+                    <a className="flex justify-between items-center px-4 py-2 text-sm text-gray-500 hover:bg-gray-100">
+                      <Link to='/settings'>
+                        Settings
+                      </Link>
+                      <Settings className="w-4 h-4 mr-2 text-gray-400" />
                     </a>
-                    <a href="#" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                      <Settings className="w-4 h-4 mr-2" />
-                      Settings
+                    <hr className='text-gray-300' />
+                    <a className="flex items-center justify-between px-4 py-2 text-sm text-gray-500 hover:bg-gray-100">
+                      <Link to='/support'>
+                        Help Center
+                      </Link>
+                      <HelpCircle className="w-4 h-4 mr-2 text-gray-400" />
                     </a>
-                    <a href="#" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                      <HelpCircle className="w-4 h-4 mr-2" />
-                      Help Center
-                    </a>
+                    <hr className='text-gray-300' />
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left flex cursor-pointer items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                    >
-                      <LogOut className="w-4 h-4 mr-2" />
+                      className="w-full text-left flex justify-between cursor-pointer items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
                       Logout
+                      <LogOut className="w-4 h-4 mr-2" />
                     </button>
                   </div>
                 )}
@@ -255,28 +281,43 @@ const Navbar = () => {
                     closeAllDropdowns();
                     setIsOrgOpen(!isOrgOpen);
                   }}
-                  className="p-1.5 border border-gray-300 text-gray-600 rounded-full flex gap-1 items-center"
+                  className="p-1.5 border border-gray-300 cursor-pointer text-gray-600 rounded-full flex gap-1 items-center"
                 >
-                  <span className='hidden md:block'>My Organization</span>
-                  <span className='block md:hidden text-sm'>Org</span>
-                  <ChevronDown className="w-4 h-4" />
+                  <span className='hidden md:block text-sm'>My Organization</span>
+                  {/* <span className='block md:hidden text-sm'>Org</span> */}
+                  <ChevronDown className="w-4 h-5" />
                 </button>
 
                 {isOrgOpen && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg py-2 z-10 border">
-                    <div className="px-3 pb-2">
-                      <input
+                  <div className="absolute border-none outline-none right-0 mt-2 w-56 bg-white rounded-md shadow-lg py-2 z-10 border">
+                    {/* <div className="pb-2"> */}
+                      {/* <input
                         type="text"
                         placeholder="Search..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full p-2 text-sm border border-gray-300 rounded-md focus:outline-none"
-                      />
-                    </div>
+                      /> */}
+                    {/* </div> */}
 
-                    <div className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
-                      <span className="text-sm font-medium">My Organization</span>
-                    </div>
+                      <div className="p-2">
+                        <ul>
+                        {allWorkspace.OwnedWorkspaces.map((val) => (
+                          <div key={val?.id}>
+                            <input
+                              onChange={() => handleSwitchWorkspace(val?.id)}
+                                  className="cursor-pointer my-2"
+                                  type="radio"
+                                  name="workspace"
+                                  id={`workspace-${val?.id}`}
+                                  checked={selectedId === val?.id}
+                                />
+                                <span className='mx-2'>{val?.WorkspaceName}</span>
+                                <hr className='text-teal-500' />
+                              </div>
+                            ))}
+                          </ul>
+                      </div>
 
                     <div onClick={()=> setIsModalOpen(true)} className="px-3 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer flex items-center">
                       <Plus className="w-4 h-4 mr-2" />
@@ -305,30 +346,17 @@ const Navbar = () => {
                     value={workspaceName}
                     onChange={(e) => setWorkspaceName(e.target.value)}
                     className="w-full p-2 mt-1 border rounded-md focus:outline-none"
-                    placeholder="Enter workspace name"
-                  />
-                </div>
-
-                <div className="mt-4">
-                  <label className="text-sm font-medium text-gray-700 flex items-center">
-                    <Briefcase className="w-4 h-4 mr-2" />
-                    Workspace ID
-                  </label>
-                  <input
-                    type="text"
-                    value={workspaceID}
-                    readOnly
-                    className="w-full p-2 mt-1 border bg-gray-100 rounded-md focus:outline-none"
+                    placeholder="Ali's Workspace 2"
                   />
                 </div>
 
                 <div className="mt-6 flex justify-between gap-1">
-                  <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 border rounded-md text-sm">
+                  <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 cursor-pointer border rounded-md text-sm">
                     Cancel
                   </button>
                   <button 
                     onClick={handleCreateWorkspace} 
-                    className="px-4 py-2 bg-teal-500 text-white rounded-md flex items-center text-sm whitespace-nowrap"
+                    className="px-4 py-2 bg-teal-500 text-white rounded-md cursor-pointer flex items-center text-sm whitespace-nowrap"
                   >
                     <Briefcase className="w-4 h-4 mr-2 md:block hidden" />
                     Create Workspace

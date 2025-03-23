@@ -23,7 +23,7 @@ function Sidebar() {
 
   return (
     <div
-      className={`fixed left-0 top-0 h-screen bg-zinc-900 text-white cursor-pointer transition-all duration-300 z-10 ease-in-out ${isExpanded ? "w-48" : "w-12 md:w-16"}`}
+      className={`fixed left-0 top-0 h-full bg-zinc-900 text-white cursor-pointer transition-all duration-300 z-10 ease-in-out ${isExpanded ? "w-48" : "w-12 md:w-16"}`}
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(false)}
     >
@@ -36,8 +36,8 @@ function Sidebar() {
         </div>
       </div>
 
-      <nav className="mt-4 space-y-2 px-2 flex flex-col h-full">
-        <div className="flex-1 space-y-2">
+      <nav className="mt-4 space-y-2 px-2 flex flex-col h-auto">
+        <div className="space-y-2">
           {menuItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -55,7 +55,7 @@ function Sidebar() {
           })}
         </div>
 
-        <div className="mt-auto space-y-2 pb-[100px]">
+        <div className="space-y-2 mt-80 md:mt-50">
           {bottomItems.map((item) => {
             const Icon = item.icon;
             return (

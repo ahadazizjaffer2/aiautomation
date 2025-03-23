@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthQuery } from '../reactQuery/hooks/useAuthQuery';
-import { Lock, Mail, Phone, User } from 'lucide-react';
+import { Copy, Lock, Mail, Phone, User } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useWorkspaceQuery } from '../reactQuery/hooks/useWorkspaceQuery';
 
 const Settings = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { updatePasswordMutation, updateProfileMutation } = useAuthQuery();
+    const [isModalOpen2, setIsModalOpen2] = useState(false);
+
+    const { updatePasswordMutation, updateProfileMutation, userInfo } = useAuthQuery();
+
     const [passwords, setPasswords] = useState({
         OldPassword: "",
         NewPassword: "",
@@ -25,7 +29,6 @@ const Settings = () => {
     };
 
     
-    const { userInfo } = useAuthQuery();
     // console.log(userInfo?.User);
     const [profileData, setProfileData] = useState({
         FirstName: '',
@@ -35,7 +38,6 @@ const Settings = () => {
         password: '',
         TFA: false,
     });
-
     
     useEffect(() => {
         if (userInfo?.User) {
@@ -63,14 +65,56 @@ const Settings = () => {
 
 
     // *****************************
-    
 
+    const { currentWorkspace, allWorkspace, updateWorkspaceMutation, teamWorkspaceMember } =  useWorkspaceQuery()
+    // console.log(currentWorkspace?.Workspace);
+    // console.log(teamWorkspaceMember);
+    // console.log(allWorkspace);
+    
     const [workspaceData, setWorkspaceData] = useState({
-        name: 'My Organization',
-        id: '+12304560713',
+        WorkspaceName: '',
+        id: '',
     });
+    useEffect(() => {
+        if (currentWorkspace?.Workspace) {
+            setWorkspaceData({
+                WorkspaceName: currentWorkspace?.Workspace?.WorkspaceName,
+                id: currentWorkspace?.Workspace?.id
+            })
+        }
+    }, [currentWorkspace])
+
+    const handleUpdateWorkspace = () => {
+        console.log({WorkspaceName: workspaceData.WorkspaceName});
+        updateWorkspaceMutation.mutate({WorkspaceName: workspaceData.WorkspaceName})
+    }
+
+
+    const [newMember, setNewMember] = useState({
+        Email: '',
+        Role: 'Admin',
+    });
+    
+    const handlenewMemeber = (e) => {
+        setNewMember((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value,
+        }));
+    };
+
+    const createMemeber = () => {
+        // addMemeberMutation.mutate(newMember)
+        console.log(newMember);
+        setIsModalOpen2(false);
+        setNewMember({
+            Email: '',
+            Role: 'Admin',
+        })
+    };
+
 
     const [activeTab, setActiveTab] = useState('profile');
+    const [activeTab2, setActiveTab2] = useState('team');
     const [members] = useState([
         { id: 1, name: 'Beetoo Leru', role: 'Owner', avatar: '👤', color: 'bg-yellow-100' },
         { id: 2, name: 'Kaiya Donin', role: 'Editor', avatar: '👤', color: 'bg-purple-100' },
@@ -305,7 +349,7 @@ const Settings = () => {
                             <h2 className="text-xl font-semibold mb-4">Workspace</h2>
                             <div className="">
                                 {/* Workspace Name */}
-                                <div className="mb-6">
+                                <div className="mb-6 relative">
                                     <label className="text-sm font-medium text-gray-700 mb-2 flex items-center">
                                         <svg className="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
@@ -314,19 +358,19 @@ const Settings = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        name="name"
-                                        value={workspaceData.name}
+                                        name="WorkspaceName"
+                                        value={workspaceData.WorkspaceName}
                                         onChange={handleWorkspaceChange}
-                                        className="w-full p-2 border border-gray-300 rounded-md"
+                                        className="w-full p-2 border outline-none border-gray-300 rounded-md"
                                     />
+                                    <button onClick={handleUpdateWorkspace} className={`bg-teal-300 py-1 absolute top-4 right-2 px-3 cursor-pointer my-4 rounded-full transition-opacity duration-300 ${ workspaceData.WorkspaceName ? "opacity-100" : "opacity-0"}`}>Update</button>
                                 </div>
+
 
                                 {/* Workspace ID */}
                                 <div>
                                     <label className="text-sm font-medium text-gray-700 mb-2 flex items-center">
-                                        <svg className="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                        </svg>
+                                        <User />
                                         Worskpace ID
                                     </label>
                                     <div className="relative">
@@ -338,11 +382,8 @@ const Settings = () => {
                                         />
                                         <button
                                             onClick={copyToClipboard}
-                                            className="absolute right-2 top-2 text-gray-500 hover:text-gray-700"
-                                        >
-                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                                            </svg>
+                                            className="absolute cursor-pointer right-2 top-2 text-gray-500 hover:text-gray-700">
+                                        <Copy />
                                         </button>
                                     </div>
                                 </div>
@@ -357,8 +398,8 @@ const Settings = () => {
                                 <div className="border-b border-gray-200 md:px-6 px-2 text-sm flex justify-between items-center">
                                     <div className="flex md:space-x-6 gap-2">
                                         <button
-                                            onClick={() => setActiveTab('team')}
-                                            className={`md:py-4 md:px-1 font-medium relative ${activeTab === 'team'
+                                            onClick={() => setActiveTab2('team')}
+                                            className={`md:py-4 md:px-1 font-medium relative ${activeTab2 === 'team'
                                                 ? 'text-green-500 border-b-2 border-green-500'
                                                 : 'text-gray-500'
                                                 }`}
@@ -366,26 +407,68 @@ const Settings = () => {
                                             The Team
                                         </button>
                                         <button
-                                            onClick={() => setActiveTab('pending')}
-                                            className={`py-4 px-1 font-medium ${activeTab === 'pending'
+                                            onClick={() => setActiveTab2('pending')}
+                                            className={`py-4 px-1 font-medium ${activeTab2 === 'pending'
                                                 ? 'text-green-500 border-b-2 border-green-500'
                                                 : 'text-gray-500'
-                                                }`}
-                                        >
+                                                }`}>
                                             Pending Invitations
                                         </button>
                                     </div>
-                                    <button className="bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded-full flex items-center">
-                                        <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
-                                        </svg>
-                                        <span className='hidden md:block'>Add Member</span>
+                                    <button onClick={() => setIsModalOpen2(true)} className="bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded-full flex gap-1 items-center">
+                                        <User />
+                                        <span className='hidden md:block cursor-pointer'>Add Member</span>
                                     </button>
+
+                                    {isModalOpen2 && (
+                                <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-[#8684848c] bg-opacity-50">
+                                    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-lg font-semibold">Add new Member</h3>
+                                            <button onClick={() => setIsModalOpen2(false)} className="text-gray-500 hover:text-gray-700 cursor-pointer bg-gray-200 px-1.5 rounded-full">✕</button>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            <div>
+                                                
+                                                <label className="text-sm font-medium flex gap-1 pb-2"><Mail size={19} className='text-gray-400'/> Email Address</label>
+                                                <input
+                                                    type="email"
+                                                    name='Email'
+                                                    placeholder='Enter member email'
+                                                    value={newMember.Email}
+                                                    onChange={handlenewMemeber}
+                                                    className="w-full p-3 border border-gray-300 outline-none rounded-md"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            <div>
+                                                <label className="text-sm font-medium flex gap-1 py-2"> <Lock size={19} className='text-gray-400'/>Role</label>
+                                                <select onChange={handlenewMemeber} name='Role' value={newMember.Role} id="" className='w-full p-3 border border-gray-300 outline-none rounded-md'>
+                                                    <option value="Admin" className='p-2 border'>Admin</option>
+                                                    <option value="Editor">Editor</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex justify-end mt-4 gap-3">
+                                            <button onClick={() => setIsModalOpen2(false)} className="text-black cursor-pointer border border-gray-300 rounded-full px-4 py-1">
+                                                Cancel
+                                            </button>
+                                            <button onClick={createMemeber} className="bg-teal-500 cursor-pointer text-white px-4 py-2 rounded-full text-[14px]">
+                                                Send Invite
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                )}
                                 </div>
 
                                 {/* Member List */}
                                 <div className="p-6">
-                                    {activeTab === 'team' ? (
+                                    {activeTab2 === 'team' ? (
                                         <div className="space-y-4">
                                             {members.map(member => (
                                                 <div key={member.id} className="flex items-center justify-between">

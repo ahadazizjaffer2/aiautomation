@@ -17,10 +17,12 @@ function StatsChart() {
 
     // Draw segments
     const segments = [
-      { color: "#818CF8", value: 30 }, // Purple
-      { color: "#F59E0B", value: 25 }, // Orange
-      { color: "#10B981", value: 25 }, // Green
-      { color: "#6B7280", value: 20 }, // Gray
+      { color: "#7a858b", value: 17 }, 
+      { color: "#4285f4", value: 17 },
+      { color: "#fb8805", value: 17 }, 
+      { color: "#1baf6b", value: 16 },
+      { color: "#9747ff", value: 16 },
+      { color: "#fbbc05", value: 17 }, 
     ]
 
     let startAngle = -Math.PI / 2
@@ -29,7 +31,7 @@ function StatsChart() {
 
       ctx.beginPath()
       ctx.arc(centerX, centerY, radius, startAngle, endAngle)
-      ctx.lineWidth = 20
+      ctx.lineWidth = 13
       ctx.strokeStyle = segment.color
       ctx.stroke()
 
