@@ -18,12 +18,12 @@ const Otp = () => {
 
   const [user, submitAction, isPending] = useActionState(async (previousState, formData) => {
     const otp = otpNum.join('');
-    const payload = {UserCode: otp};
+    const payload = {UserCode: otp, Login:true};
     console.log(payload);
-    // verifyOtpMutation.mutate(payload);
-    if(data){
-      setOtpNum(["", "", "", "", "", ""]);
-    }
+    verifyOtpMutation.mutate(payload);
+    // if(data){
+    //   setOtpNum(["", "", "", "", "", ""]);
+    // }
   });
 
   const handleChange = (e, index) => {

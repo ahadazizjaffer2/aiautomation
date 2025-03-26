@@ -21,9 +21,9 @@ export const useAuthQuery = (navigate) => {
       onSuccess: (data) => {
       console.log("data-query-->", data);
       toast.success(data.message || "Login successfully");
-      if (data?.user) {
+      if (data?.User) {
         localStorage.setItem("user", JSON.stringify({data: data.user, token: data.token}));
-        if(data?.user?.TFA){
+        if(data?.User?.TFA){
           navigate("/otp");
         }else{
           navigate("/");
@@ -53,6 +53,7 @@ export const useAuthQuery = (navigate) => {
     mutationFn: verifyOtp, // ✅ Fix
     onSuccess: (data) => {
       toast.success(data.message);
+      localStorage.setItem("user", JSON.stringify({data: data.user, token: data.token}));
       navigate('/');
     },
     onError: (error) => toast.error(error.response?.data?.message || "OTP verification failed"),

@@ -18,7 +18,6 @@ const Login = () => {
 
   return (  
     <div className="min-h-screen flex">
-      {/* Left side - Login Form */}
       <div className="w-full lg:w-1/2 flex flex-col items-center justify-center px-6 lg:px-16 xl:px-24">
         <div className="w-full max-w-sm">
           {/* Logo */}
