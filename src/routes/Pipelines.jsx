@@ -135,7 +135,7 @@ const Pipelines = () => {
   )
 
   useEffect(() => {
-    localStorage.removeItem("token")
+    // localStorage.removeItem("token")
     if (allLeads?.leads) {
       // Group leads by their status (pipeline stage)
       const groupedLeads = allLeads.leads.reduce((acc, lead) => {
