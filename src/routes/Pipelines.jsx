@@ -116,7 +116,7 @@ const StageContainer = ({ stage, children }) => {
 }
 
 const Pipelines = () => {
-  const { allLeads, isLoading, isError, changeLeadStatus } = usePipelineQuery()
+  const { allLeads, changeLeadStatus } = usePipelineQuery()
   const [leadsByStage, setLeadsByStage] = useState({})
   const [activeId, setActiveId] = useState(null)
   const [activeLead, setActiveLead] = useState(null)
@@ -136,6 +136,7 @@ const Pipelines = () => {
 
   useEffect(() => {
     // localStorage.removeItem("token")
+    console.log("Initializing");
     if (allLeads?.leads) {
       // Group leads by their status (pipeline stage)
       const groupedLeads = allLeads.leads.reduce((acc, lead) => {
@@ -224,8 +225,8 @@ const Pipelines = () => {
     setActiveStage(null)
   }
 
-  if (isLoading) return <p className="p-6">Loading leads...</p>
-  if (isError) return <p>Error fetching leads.</p>
+  // if (isLoading) return <p className="p-6">Loading leads...</p>
+  // if (isError) return <p>Error fetching leads.</p>
 
   return (
     <div className="px-[10px] pt-[30px] bg-gray-100 min-h-screen overflow-x-auto flex justify-center">
